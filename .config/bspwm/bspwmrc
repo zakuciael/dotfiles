@@ -1,14 +1,11 @@
 #! /bin/sh
 
-# if [ -x ~/.screenlayout/main.sh ]; then
-# 	~/.screenlayout/main.sh
-# fi
-
 seq 0 3 | xargs -l1 -I@ picom -b -d :0.@
 nitrogen --restore &
 sxhkd &
 
 bspc wm -O HDMI-1 DP-1 DVI-D-2
+
 
 bspc monitor HDMI-1 -d I II III
 bspc monitor DP-1 -d IV V VI
@@ -29,6 +26,5 @@ bspc rule -a Ulauncher state=floating border=off
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
 
-# systemctl --user start ulauncher.service &
 dex -a &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
