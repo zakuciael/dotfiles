@@ -7,8 +7,12 @@
 nitrogen --restore &
 
 # Run sxhkd
-set -U SXHKD_SHELL /usr/bin/bash
+set -U SXHKD_SHELL /usr/bin/bash &
 sxhkd &
+
+# Autostart programs
+dex -a &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Setup correct monitor layout
 bspc wm -O HDMI-1 DP-1 DVI-D-2
@@ -32,7 +36,3 @@ bspc rule -a Shadow desktop='^1' state=floating
 # Fix Java applications
 wmname LG3D
 export _JAVA_AWT_WM_NONREPARENTING=1
-
-# Autostart programs
-dex -a &
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
