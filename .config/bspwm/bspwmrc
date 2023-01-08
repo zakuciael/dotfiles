@@ -1,27 +1,33 @@
 #! /bin/sh
 
-seq 0 3 | xargs -l1 -I@ picom -b -d :0.@
+# X compositor
+# seq 0 3 | xargs -l1 -I@ picom -b -d :0.@
+
+# Wallpapers
 nitrogen --restore &
+
+# Run sxhkd
 sxhkd &
 
+# Setup correct monitor layout
 bspc wm -O HDMI-1 DP-1 DVI-D-2
-
-
 bspc monitor HDMI-1 -d I II III
 bspc monitor DP-1 -d IV V VI
 bspc monitor DVI-D-2 -d VII VII VIII
 
+# BSPWM config
 bspc config border_width		2
 bspc config window_gap			5
-
 bspc config split_ratio			0.52
 bspc config borderless_monocle		false
 bspc config gapless_monocle		false
 
+# Window rules
 bspc rule -a Ulauncher state=floating border=off
 bspc rule -a discord desktop='^7'
 bspc rule -a "Google-chrome" desktop='^4'
 bspc rule -a Shadow desktop='^1' state=floating
 
+# Autostart programs
 dex -a &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
