@@ -29,6 +29,10 @@ bspc rule -a discord desktop='^7'
 bspc rule -a "Google-chrome" desktop='^4'
 bspc rule -a Shadow desktop='^1' state=floating
 
+# Fix Java applications
+wmname LG3D
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 # Autostart programs
 dex -a &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
