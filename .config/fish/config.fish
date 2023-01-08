@@ -10,6 +10,9 @@ set fish_greeting
 # Bind Ctrl+S to append sudo
 bind \cs '__ethp_commandline_toggle_sudo.fish'
 
+# Envs
+set -U EDITOR "nvim"
+
 # Aliases
 alias ls="exa -lag --header"
 alias cat="bat"
