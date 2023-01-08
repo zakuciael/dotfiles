@@ -1,0 +1,15 @@
+[user]
+	name = Krzysztof Saczuk
+	email = zakku@zakku.eu
+  # signingkey = 82481FA2429C546F
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEcrcFZPwdfoZb0ZP3SUr/ZgN6Hycpk57Ky1UMmPbAg8
+[commit]
+	gpgsign = true
+[core]
+	autocrlf = input
+[init]
+  defaultBranch = main
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = "/opt/1Password/op-ssh-sign"
