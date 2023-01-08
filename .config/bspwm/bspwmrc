@@ -7,6 +7,7 @@
 nitrogen --restore &
 
 # Run sxhkd
+set -U SXHKD_SHELL /usr/bin/bash
 sxhkd &
 
 # Setup correct monitor layout
