@@ -18,10 +18,10 @@ dex -a &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Setup correct monitor layout
-bspc wm -O HDMI-1 DP-1 DVI-D-2
-bspc monitor HDMI-1 -d I II III
-bspc monitor DP-1 -d IV V VI
-bspc monitor DVI-D-2 -d VII VII VIII
+bspc wm -O HDMI-A-0 DisplayPort-0 DVI-D-1
+bspc monitor HDMI-A-0 -d I II III
+bspc monitor DisplayPort-0 -d IV V VI
+bspc monitor DVI-D-1 -d VII VII VIII
 
 # BSPWM config
 bspc config border_width		2
