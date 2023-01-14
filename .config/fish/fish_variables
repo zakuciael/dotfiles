@@ -1,6 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR EDITOR:nvim
+SETUVAR XDG_CONFIG_HOME:/home/zakku/\x2econfig/
 SETUVAR ZO_CMD:zo
 SETUVAR Z_CMD:z
 SETUVAR Z_DATA:/home/zakku/\x2ez

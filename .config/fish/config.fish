@@ -12,6 +12,7 @@ bind \cs '__ethp_commandline_toggle_sudo.fish'
 
 # Envs
 set -U EDITOR "nvim"
+set -U XDG_CONFIG_HOME "$HOME/.config/"
 
 # Aliases
 alias ls="exa -lag --header"
