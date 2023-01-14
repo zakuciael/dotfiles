@@ -11,7 +11,6 @@ M.ui = {
 
 M.plugins = {
   user = {
-    ["github/copilot.vim"] = {},
     ["windwp/nvim-ts-autotag"] = {
       ft = { "html", "javascriptreact" },
       after = "nvim-treesitter",
@@ -63,6 +62,7 @@ M.plugins = {
         "typescript",
         "vue",
         "yaml",
+        "sxhkdrc",
       },
     },
     ["williamboman/mason.nvim"] = {
