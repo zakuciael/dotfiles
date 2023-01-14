@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# Set XDG envs
+export XDG_CONFIG_HOME=$HOME/.config/
+
 # X compositor
 # seq 0 3 | xargs -l1 -I@ picom -b -d :0.@
 
