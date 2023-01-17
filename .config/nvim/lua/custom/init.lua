@@ -1,6 +1,7 @@
 vim.filetype.add({
   filename = {
-    ["bspwmrc"] = "bash"
+    ["bspwmrc"] = "bash",
     ["sxhkdrc"] = "sxhkdrc",
   },
 })
+
