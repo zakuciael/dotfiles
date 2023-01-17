@@ -140,6 +140,8 @@ Templates/
 Dropbox/
 Desktop/
 Documents/
+Development/
+Music/
 .cache/
 caches/
 .zoom/
@@ -176,6 +178,7 @@ caches/
 .cargo/
 .asdf/
 .adobe-reader*/
+.themes/
 
 ## .config abusers
 .config/opera/
@@ -197,3 +200,13 @@ caches/
 .config/FontBase/
 .config/Code - OSS/
 .config/Bitwarden/
+.config/google-chrome
+.config/1Password
+.config/GitHub Desktop/
+.config/BraveSoftware/
+.config/google-chrome-*/
+.config/shadow/
+.config/spotify/
+.config/microsoft-edge-dev/
+.config/vivalid/
+.config/vivalid-*/
