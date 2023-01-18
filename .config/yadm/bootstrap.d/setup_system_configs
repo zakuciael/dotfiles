@@ -5,8 +5,12 @@ set -eu
 # Directory to look for system configs
 SYSTEM_CONFIGS_DIR="$HOME/.config/system/"
 
+echo "Setting up system files..."
+
 find -L "$SYSTEM_CONFIGS_DIR" -type f | sort | while IFS= read -r SRC_PATH; do
   DEST_PATH="/etc/$(realpath --relative-to="$SYSTEM_CONFIGS_DIR" "$SRC_PATH")"
   echo "Symlinking $SRC_PATH -> $DEST_PATH"
   sudo ln -sf $SRC_PATH $DEST_PATH
 done
+
+echo "System files setup complete"
