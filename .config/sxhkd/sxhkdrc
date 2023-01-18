@@ -2,7 +2,7 @@
 # WM Independend
 #
 
-# Launch terminal
+# Launch terminal in a new window
 super + Return
 	kitty
 
@@ -10,10 +10,15 @@ super + Return
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# Show help on key bindings
+super + F1
+  kitty -o initial_window_width=170 -o initial_window_height=30 -o confirm_os_window_close=-1 -o close_on_child_death=yes --class sxhkd_keys $HOME/.scripts/sxhkd-help
+
 {XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
 	playerctl {stop, play-pause, previous, next}
 
 # Control volume
+
 {XF86AudioLowerVolume, XF86AudioRaiseVolume}
   pactl set-sink-volume @DEFAULT_SINK@ {-5%, +5%}
 
@@ -95,5 +100,5 @@ super + alt + {Left,Down,Up,Right}
   $HOME/.scripts/re_exec bspc node -z $(echo "right -$STEP 0,top 0 $STEP,bottom 0 -$STEP,left $STEP 0" | cut -d',' -f$SELECTION)
 
 # Move a floating window
-super + {h,j,k,l}
+super + shift + alt {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}

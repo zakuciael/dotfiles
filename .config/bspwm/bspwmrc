@@ -10,7 +10,7 @@ picom -b &
 nitrogen --restore &
 
 # Run sxhkd
-set -U SXHKD_SHELL /usr/bin/bash &
+set -U SXHKD_SHELL /usr/bin/sh &
 sxhkd &
 
 # Autostart programs
@@ -33,7 +33,8 @@ bspc config normal_border_color   "#333333"
 bspc config focused_border_color  "#3a94da"
 
 # Window rules
-bspc rule -a Ulauncher state=floating border=off
+bspc rule -a Ulauncher state=floating border=off focus=on
+bspc rule -a sxhkd_keys state=floating
 bspc rule -a discord desktop='^7'
 bspc rule -a "Google-chrome" desktop='^4'
 bspc rule -a Shadow desktop='^1' state=floating
