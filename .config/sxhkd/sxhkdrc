@@ -12,7 +12,7 @@ super + Escape
 
 # Show help on key bindings
 super + F1
-  kitty -o initial_window_width=170 -o initial_window_height=30 -o confirm_os_window_close=-1 -o close_on_child_death=yes --class sxhkd_keys $HOME/.scripts/sxhkd-help
+  kitty -o remember_window_size=no -o initial_window_width=1000 -o initial_window_height=500 -o confirm_os_window_close=0 -o close_on_child_death=yes --class sxhkd_keys /bin/bash -c /home/zakku/.scripts/sxhkd-help
 
 {XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
 	playerctl {stop, play-pause, previous, next}
