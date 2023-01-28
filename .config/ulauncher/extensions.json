@@ -55,18 +55,39 @@
         "last_commit": "8ec8a0dda09e172de62051cd1f251816ce4af368",
         "last_commit_time": "2019-09-06T19:20:09"
     },
-    "com.github.iboyperson.ulauncher-system": {
-        "id": "com.github.iboyperson.ulauncher-system",
-        "url": "https://github.com/iboyperson/ulauncher-system",
-        "updated_at": "2023-01-09T19:40:29.253761",
-        "last_commit": "667613bf7bb6b4affa4f2121b58589477cd89829",
-        "last_commit_time": "2021-11-08T18:16:55"
-    },
     "com.github.rapha149.ulauncher-bluetooth": {
         "id": "com.github.rapha149.ulauncher-bluetooth",
         "url": "https://github.com/Rapha149/ulauncher-bluetooth",
         "updated_at": "2023-01-09T19:40:44.134577",
         "last_commit": "aa84798f539c9cb312cf3be01415a58901ace8d6",
         "last_commit_time": "2022-04-27T10:56:00"
+    },
+    "com.github.episode6.ulauncher-system-management-direct": {
+        "id": "com.github.episode6.ulauncher-system-management-direct",
+        "url": "https://github.com/episode6/ulauncher-system-management-direct",
+        "updated_at": "2023-01-25T16:32:44.425501",
+        "last_commit": "c6c0febff9eae884e4a8bc97d057480436fb5c9b",
+        "last_commit_time": "2020-07-22T18:41:36"
+    },
+    "com.github.adamtillou.ulauncher-aurman-plugin": {
+        "id": "com.github.adamtillou.ulauncher-aurman-plugin",
+        "url": "https://github.com/AdamTillou/ulauncher-aurman-plugin",
+        "updated_at": "2023-01-25T16:33:06.372026",
+        "last_commit": "af11b33cb6ed6ec055859482bdde0353013d1378",
+        "last_commit_time": "2021-07-16T21:51:05"
+    },
+    "com.github.jyvern.ulauncher-ssh": {
+        "id": "com.github.jyvern.ulauncher-ssh",
+        "url": "https://github.com/jyvern/ulauncher-ssh",
+        "updated_at": "2023-01-25T16:33:19.817587",
+        "last_commit": "47168e6ea45878787536ae5670612509f5dddced",
+        "last_commit_time": "2021-08-29T16:30:14"
+    },
+    "com.github.xrealneon.anilauncher": {
+        "id": "com.github.xrealneon.anilauncher",
+        "url": "https://github.com/xRealNeon/AniLauncher",
+        "updated_at": "2023-01-26T15:43:43.452040",
+        "last_commit": "c691c680168cc9266c782b55e11d1d1dc372bce5",
+        "last_commit_time": "2022-05-16T13:18:42"
     }
 }
