@@ -210,3 +210,7 @@ caches/
 .config/microsoft-edge-dev/
 .config/vivalid/
 .config/vivalid-*/
+
+# Sensitive data
+.config/ulauncher/ext_preferences/com.github.brpaz.ulauncher-github.db
+.npmrc
