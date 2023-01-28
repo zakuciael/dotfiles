@@ -37,3 +37,4 @@ starship init fish | source
 set -gx PNPM_HOME "/home/zakku/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 # pnpm end
+source /home/zakku/.config/op/plugins.sh
