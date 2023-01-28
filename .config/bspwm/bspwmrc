@@ -1,23 +1,6 @@
 #! /bin/sh
 
-# Set XDG envs
-export XDG_CONFIG_HOME=$HOME/.config/
-
-# X compositor
-picom -b &
-
-# Wallpapers
-nitrogen --restore &
-
-# Run sxhkd
-set -U SXHKD_SHELL /usr/bin/sh &
-sxhkd &
-
-# Autostart programs
-dex -a &
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-# Setup correct monitor layout
+# BSPWM monitor layout
 bspc wm -O HDMI-1 DP-1 DVI-D-2
 bspc monitor HDMI-1 -d I II III
 bspc monitor DP-1 -d IV V VI
@@ -32,12 +15,36 @@ bspc config gapless_monocle       false
 bspc config normal_border_color   "#333333"
 bspc config focused_border_color  "#3a94da"
 
-# Window rules
+# BSPWM window rules
 bspc rule -a Ulauncher state=floating border=off focus=on
 bspc rule -a sxhkd_keys state=floating
 bspc rule -a discord desktop='^7'
-bspc rule -a "Google-chrome" desktop='^4'
+bspc rule -a Google-chrome desktop='^4'
 bspc rule -a Shadow desktop='^1' state=floating
+
+# Fix cursor
+xsetroot -cursor_name left_ptr
+
+# Kill if already running
+killall -9 picom sxhkd
+
+# Polkit agent
+if [[ ! `pidof polkit-gnome-authentication-agent-1` ]]; then
+  /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
+
+# Launch keybindings daemon
+sxhkd &
+
+# Start X compositor
+while pgrep -u $UID -x picom >/dev/null; do sleep 1; done
+picom -b &
+
+# Restore wallpapers
+nitrogen --restore &
+
+# Run autostart applications
+dex -a &
 
 # Fix Java applications
 wmname LG3D
