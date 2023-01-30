@@ -22,7 +22,8 @@ local servers = {
   "svelte",
   "taplo",
   "volar",
-  "yamlls"
+  "yamlls",
+  "gopls"
 }
 
 for _, lsp in ipairs(servers) do

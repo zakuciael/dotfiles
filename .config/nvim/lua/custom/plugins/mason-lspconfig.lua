@@ -25,6 +25,7 @@ mason_lspconfig.setup({
     "svelte",
     "taplo",
     "volar",
-    "yamlls"
+    "yamlls",
+    "gopls"
   },
 })
