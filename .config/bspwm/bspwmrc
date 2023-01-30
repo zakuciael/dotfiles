@@ -19,7 +19,6 @@ bspc config focused_border_color  "#3a94da"
 bspc rule -a Ulauncher state=floating border=off focus=on
 bspc rule -a sxhkd_keys state=floating
 bspc rule -a discord desktop='^7'
-bspc rule -a Google-chrome desktop='^4'
 bspc rule -a Shadow desktop='^1' state=floating
 
 # Fix cursor
@@ -42,6 +41,11 @@ picom -b &
 
 # Restore wallpapers
 nitrogen --restore &
+
+# Discord RPC Extension
+if [[ ! `pidof server_linux_no` ]]; then
+  /opt/discord-rpc/server_linux_no_tray_debug &
+fi
 
 # Run autostart applications
 dex -a &
