@@ -1,3 +1,4 @@
 .npmrc  filter=crypt diff=crypt merge=crypt
 .wakatime.cfg filter=crypt diff=crypt merge=crypt
+.config/polybar/keys/*.key filter=crypt diff=crypt merge=crypt
 .config/ulauncher/ext_preferences/com.github.brpaz.ulauncher-github.db filter=crypt diff=crypt merge=crypt
