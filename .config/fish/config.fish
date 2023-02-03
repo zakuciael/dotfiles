@@ -24,7 +24,7 @@ alias tmux="tmux -2"
 source /opt/asdf-vm/asdf.fish
 
 # Setup JAVA_HOME
-# source $HOME/.asdf/plugins/java/set-java-home.fish
+source $HOME/.asdf/plugins/java/set-java-home.fish
 
 # TabTab source for packages
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
