@@ -8,7 +8,7 @@ fish_add_path "$HOME/.local/bin"
 set fish_greeting
 
 # Bind Ctrl+S to append sudo
-bind \cs '__ethp_commandline_toggle_sudo.fish'
+bind \cs '__ethp_commandline_toggle_sudo'
 
 # Envs
 set -U EDITOR "nvim"
