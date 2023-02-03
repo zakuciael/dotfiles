@@ -39,6 +39,9 @@ sxhkd &
 while pgrep -u $UID -x picom >/dev/null; do sleep 1; done
 picom -b &
 
+# Run polybar
+[ -x $HOME/.config/polybar/launch.sh ] && $HOME/.config/polybar/launch.sh &
+
 # Restore wallpapers
 nitrogen --restore &
 
