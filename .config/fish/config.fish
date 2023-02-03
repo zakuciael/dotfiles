@@ -26,15 +26,16 @@ alias tmux="tmux -2"
 # Setup JAVA_HOME
 # source $HOME/.asdf/plugins/java/set-java-home.fish
 
-# Start starship prompt
-starship init fish | source
-
-# tabtab source for packages
-# uninstall by removing these lines
+# TabTab source for packages
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
 
-# pnpm
+# Setup PNPM
 set -gx PNPM_HOME "/home/zakku/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
-# pnpm end
+
+# Load 1password plugins
 source /home/zakku/.config/op/plugins.sh
+source /home/zakku/.op/plugins.sh
+
+# Start starship prompt
+starship init fish | source
