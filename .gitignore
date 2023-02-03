@@ -211,3 +211,7 @@ caches/
 .config/microsoft-edge-dev/
 .config/vivalid/
 .config/vivalid-*/
+
+# 1pass plugin settings
+.op/
+.config/op/
