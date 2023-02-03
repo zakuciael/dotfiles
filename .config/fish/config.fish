@@ -15,7 +15,7 @@ set -U EDITOR "nvim"
 set -U XDG_CONFIG_HOME "$HOME/.config/"
 
 # Aliases
-alias ls="exa -lag --header --icons"
+alias ls="exa -lag --header --icons --git"
 alias cat="bat"
 alias vim="nvim"
 alias tmux="tmux -2"
