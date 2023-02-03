@@ -21,7 +21,7 @@ alias vim="nvim"
 alias tmux="tmux -2"
 
 # Load asdf
-# source /opt/asdf-vm/asdf.fish
+source /opt/asdf-vm/asdf.fish
 
 # Setup JAVA_HOME
 # source $HOME/.asdf/plugins/java/set-java-home.fish
