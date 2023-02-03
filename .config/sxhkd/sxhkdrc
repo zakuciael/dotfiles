@@ -25,6 +25,10 @@ super + F1
 XF86AudioMute
   pactl set-sink-mute @DEFAULT_SINK@ toggle
 
+# Make a screenshot
+Print
+    flameshot gui
+
 #
 # BSPWM
 #
