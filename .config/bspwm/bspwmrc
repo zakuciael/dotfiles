@@ -14,6 +14,7 @@ bspc config borderless_monocle		false
 bspc config gapless_monocle       false
 bspc config normal_border_color   "#333333"
 bspc config focused_border_color  "#3a94da"
+bspc config external_rules_command "/home/zakku/.config/bspwm/rules"
 
 # BSPWM window rules
 bspc rule -a Ulauncher state=floating border=off focus=on

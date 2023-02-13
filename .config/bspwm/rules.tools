@@ -1,0 +1,37 @@
+#! /bin/bash
+
+readonly SKIP_KEY="__SKIP_ME__"
+
+# Initializes global variables retreived from the command line arguments
+init() {
+  readonly WINDOW_ID=$1
+  readonly CLASS_NAME=$2
+  readonly INSTANCE_NAME=$3
+  readonly SETTINGS=${@:4}
+}
+
+# Returns indicator that this rule should be skipped
+skip() {
+  echo $SKIP_KEY
+}
+
+# Logs debug data to the /var/log/ directory
+log() {
+  local DATA=$@
+  echo "$DATA" >> /var/log/bspwm/debug.log
+}
+
+# Returns specified info about an window
+window_info() {
+  local WID=$1
+  local NAME=$2
+
+  local DATA=$(xprop -id $WID $NAME)
+  local REGEX='"(.*)"'
+
+  if [[ "$DATA" =~ $REGEX ]]; then
+    echo "${BASH_REMATCH[1]}"
+  else
+    echo ""
+  fi
+}

@@ -1,0 +1,17 @@
+#! /bin/sh
+
+source "/home/zakku/.config/bspwm/rules.tools"
+init $@
+
+WINDOW_NAME=$(window_info $WINDOW_ID "WM_NAME")
+
+log "============== DEBUG =============="
+log "  WINDOW ID: $WINDOW_ID"
+log "  WINDOW NAME: $WINDOW_NAME"
+log "  CLASS NAME: $CLASS_NAME"
+log "  INSTANCE_NAME: $INSTANCE_NAME"
+log "  SETTINGS: $SETTINGS"
+log "============== DEBUG =============="
+log ""
+
+skip

@@ -1,0 +1,16 @@
+#! /bin/sh
+
+source "/home/zakku/.config/bspwm/rules.tools"
+init $@
+
+WINDOW_NAME=$(window_info $WINDOW_ID "WM_NAME")
+
+if [[ "$CLASS_NAME" == jetbrains-* ]]; then
+  if [[ "$WINDOW_NAME" = "splash" ]]; then
+    echo "state=floating border=off"
+  elif [[ "$WINDOW_NAME" == "Welcome to "* ]]; then
+    echo "state=floating"
+  fi
+else
+ skip
+fi

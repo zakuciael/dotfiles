@@ -1,0 +1,31 @@
+#!/bin/bash
+
+source "/home/zakku/.config/bspwm/rules.tools"
+
+# Save this file as ~/.config/bspwm/rules and make it executable. It will
+# execute all executable files (excluding templates and editor backups) in the 
+# ~/.config/bspwm/rules.d/ directory when run.
+
+set -eu
+
+# Directory to look for rule executables in
+RULES_D="${BASH_SOURCE[0]}.d"
+
+if [[ ! -d "$RULES_D" ]]; then
+  exit 1
+fi
+
+FILES=$(find -L "$RULES_D" -type f | sort)
+RESULT=()
+
+for FILE in $FILES; do
+  if [[ -x "$FILE" && ! "$FILE" =~ "##" && ! "$FILE" =~ "~$" ]]; then
+    OUTPUT=$($FILE $@)
+
+    if [ "$OUTPUT" != "$SKIP_KEY" ]; then
+      RESULT+=("$OUTPUT")
+    fi
+  fi
+done
+
+echo "${RESULT[@]}"
