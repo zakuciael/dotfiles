@@ -73,10 +73,10 @@ super + {o,i}
 
 # Focus/Send to the given workspace
 super + {_,shift + }{1-9}
-	bspc {desktop -f,node -d} '^{1-9}' --follow
+	bspc {desktop -f,node -d} '^{1-9}'
 
 super + {_,shift + }KP_{End,Down,Next,Left,Begin,Right,Home,Up,Prior}
-	bspc {desktop -f,node -d} '^{1,2,3,4,5,6,7,8,9}' --follow
+	bspc {desktop -f,node -d} '^{1,2,3,4,5,6,7,8,9}'
 
 # Preselect the direction
 super + ctrl + {Left,Down,Up,Right}
