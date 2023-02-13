@@ -13,7 +13,6 @@ mason_lspconfig.setup({
     "graphql",
     "html",
     "jdtls",
-    "sumneko_lua",
     "jsonls",
     "prismals",
     "eslint",

@@ -10,7 +10,7 @@ local servers = {
   "graphql",
   "html",
   "jdtls",
-  "sumneko_lua",
+  "lua_ls",
   "jsonls",
   "prismals",
   "eslint",
