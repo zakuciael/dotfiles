@@ -1,0 +1,3 @@
+[submodule ".config/ulauncher/user-themes/WhiteSur-Dark-ulauncher"]
+	path = .config/ulauncher/user-themes/WhiteSur-Dark-ulauncher
+	url = git@github.com:Raayib/WhiteSur-Dark-ulauncher.git
