@@ -5,11 +5,18 @@ init $@
 
 WINDOW_NAME=$(window_info $WINDOW_ID "WM_NAME")
 
+output() {
+  local DATA=$@
+  echo "$DATA desktop=1"
+}
+
 if [[ "$CLASS_NAME" == jetbrains-* ]]; then
   if [[ "$WINDOW_NAME" = "splash" ]]; then
-    echo "state=floating border=off"
+    output "state=floating border=off"
   elif [[ "$WINDOW_NAME" == "Welcome to "* ]]; then
-    echo "state=floating"
+    output "state=floating"
+  elif [[ "$WINDOW_NAME" == "Import "* ]] && [[ "$WINDOW_NAME" == *"Settings" ]]; then
+    output "state=floating"
   fi
 else
  skip
