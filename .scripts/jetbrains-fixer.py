@@ -1,0 +1,1 @@
+/home/zakku/Development/Projects/Other/Jetbrains Linux Fixer/jetbrains-fixer.py

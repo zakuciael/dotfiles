@@ -1,0 +1,6 @@
+#! /bin/bash
+
+for i in $(find /usr/share/icons/ -maxdepth 1 -type d); do 
+  sudo rm -f $i/.icon-theme.cache
+  sudo gtk-update-icon-cache -t -i $i
+done
