@@ -29,6 +29,9 @@ XF86AudioMute
 Print
     flameshot gui
 
+super + l
+  loginctl lock-session
+
 #
 # BSPWM
 #
