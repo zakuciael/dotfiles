@@ -37,6 +37,9 @@ if [[ ! `pidof polkit-gnome-authentication-agent-1` ]]; then
 fi
 
 # Launch keybindings daemon
+export SXHKD_VAR_PANEL_OFFSET=25
+export SXHKD_VAR_BORDER_OFFSET=-6
+export SXHKD_VAR_WM=bspwm
 SXHKD_SHELL=/usr/bin/sh sxhkd &
 
 # Start X compositor

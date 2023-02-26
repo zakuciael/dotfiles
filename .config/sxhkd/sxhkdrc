@@ -14,14 +14,15 @@ super + Escape
 super + F1
   alacritty --class sxhkd_keys -t "Sxhkd Keybinds" -e ~/.scripts/sxhkd-help
 
+# Control audio playback
 {XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
 	playerctl {stop, play-pause, previous, next}
 
 # Control volume
-
 {XF86AudioLowerVolume, XF86AudioRaiseVolume}
   pactl set-sink-volume @DEFAULT_SINK@ {-5%, +5%}
 
+# Mute volume
 XF86AudioMute
   pactl set-sink-mute @DEFAULT_SINK@ toggle
 
@@ -29,8 +30,21 @@ XF86AudioMute
 Print
     flameshot gui
 
+# Lock session
 super + l
   loginctl lock-session
+
+#
+# Scratchpad
+# 
+
+# Dropdown terminal
+super + ctrl + Return
+  tdrop --wm $SXHKD_VAR_WM -ma -w $SXHKD_VAR_BORDER_OFFSET -y $SXHKD_VAR_PANEL_OFFSET alacritty
+
+# Spotify
+super + ctrl + s
+  tdrop --wm $SXHKD_VAR_WM -ma -w 80% -h 80% -y 10% -x 10% spotify
 
 #
 # BSPWM
