@@ -143,6 +143,7 @@ Documents/
 Development/
 Music/
 go/
+.stack/
 .cache/
 caches/
 .zoom/
@@ -209,9 +210,16 @@ caches/
 .config/shadow/
 .config/spotify/
 .config/microsoft-edge-dev/
-.config/vivalid/
-.config/vivalid-*/
+.config/vivaldi/
+.config/vivaldi-*/
+.config/libreoffice/
+.config/Mailspring/
+.config/cef_user_data/
+.config/wireshark/
 
 # 1pass plugin settings
 .op/
 .config/op/
+
+# secrets, logins, etc.
+.tsh/
