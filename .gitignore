@@ -189,7 +189,6 @@ caches/
 .config/hexchat/
 .config/zconvey/
 .config/pulse/
-.config/gtk-*/
 .config/ranger/
 .config/ibus/
 .config/chromium/
@@ -216,6 +215,9 @@ caches/
 .config/Mailspring/
 .config/cef_user_data/
 .config/wireshark/
+.config/gtk-4.0/*.css
+.config/gtk-4.0/assets/
+.config/gtk-4.0/windows-assets/
 
 # 1pass plugin settings
 .op/
