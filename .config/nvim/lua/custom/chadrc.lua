@@ -6,103 +6,106 @@ local M = {}
 -- example of changing theme:
 
 M.ui = {
-  theme = "snazzy",
+	theme = "snazzy",
 }
 
 M.plugins = {
-  user = {
-    ["windwp/nvim-ts-autotag"] = {
-      ft = { "html", "javascriptreact" },
-      after = "nvim-treesitter",
-      config = function ()
-        require("nvim-ts-autotag").setup()
-      end
-    },
-    ["jose-elias-alvarez/null-ls.nvim"] = {
-      after = "nvim-lspconfig",
-      config = function()
-        require "custom.plugins.null-ls"
-      end
-    },
-    ["neovim/nvim-lspconfig"] = {
-      config = function()
-        require "plugins.configs.lspconfig"
-        require "custom.plugins.lspconfig"
-      end,
-    },
-  },
-  override = {
-    ["nvim-treesitter/nvim-treesitter"] = {
-      ensure_installed = {
-        "astro",
-        "bash",
-        "css",
-        "dockerfile",
-        "graphql",
-        "html",
-        "http",
-        "java",
-        "javascript",
-        "jsdoc",
-        "json",
-        "json5",
-        "lua",
-        "make",
-        "markdown",
-        "prisma",
-        "proto",
-        "python",
-        "regex",
-        "rust",
-        "scss",
-        "sql",
-        "svelte",
-        "toml",
-        "tsx",
-        "typescript",
-        "vue",
-        "yaml",
-        "sxhkdrc",
-      },
-    },
+	user = {
+		["windwp/nvim-ts-autotag"] = {
+			ft = { "html", "javascriptreact" },
+			after = "nvim-treesitter",
+			config = function()
+				require("nvim-ts-autotag").setup()
+			end,
+		},
+		["jose-elias-alvarez/null-ls.nvim"] = {
+      cmd = require("core.lazy_load").on_file_open "null-ls.nvim",
+			config = function()
+				require("custom.plugins.null-ls")
+			end,
+		},
     ["williamboman/mason.nvim"] = {
-      ensure_installed = {
-        -- LSPs
-        "astro-language-server",
-        "bash-language-server",
-        "css-lsp", -- css, scss
-        "cssmodules-language-server",
-        "dockerfile-language-server",
-        "graphql-language-service-cli",
-        "html-lsp",
-        "jdtls", -- java
-        "json-lsp",
-        "lua-language-server",
-        "prisma-language-server",
-        "eslint-lsp",
-        "typescript-language-server",
-        "marksman", -- markdown
-        "pyright", -- python
-        "rust-analyzer",
-        "sqlls", -- sql
-        "svelte-language-server",
-        "taplo", -- toml
-        "vue-language-server",
-        "yaml-language-server",
-
-       -- Linters & Formatters
-        "shellharden", -- bash
-        "prettierd", -- javascript, typescript, css, sccs
-        "eslint_d", -- javascript, typescript
-        "xo", -- javascript, typescript
-        "selene", -- lua
-        "stylua", -- lua
-        "mypy", -- python
-        "pylint", -- python
-        "actionlint", -- yaml
-      },
+      cmd = require("core.lazy_load").on_file_open "mason.nvim",
     },
-  },
+		["williamboman/mason-lspconfig.nvim"] = {
+      cmd = require("core.lazy_load").on_file_open "mason-lspconfig.nvim",
+      config = function ()
+        require "custom.plugins.mason-lspconfig"
+      end,
+		},
+	},
+	override = {
+		["nvim-treesitter/nvim-treesitter"] = {
+			ensure_installed = {
+				"astro",
+				"bash",
+				"css",
+				"dockerfile",
+				"graphql",
+				"html",
+				"http",
+				"java",
+				"javascript",
+				"jsdoc",
+				"json",
+				"json5",
+				"lua",
+				"make",
+				"markdown",
+				"prisma",
+				"proto",
+				"python",
+				"regex",
+				"rust",
+				"scss",
+				"sql",
+				"svelte",
+				"toml",
+				"tsx",
+				"typescript",
+				"vue",
+				"yaml",
+				"sxhkdrc",
+			},
+		},
+		["williamboman/mason.nvim"] = {
+			ensure_installed = {
+				-- LSPs
+				"astro-language-server",
+				"bash-language-server",
+				"css-lsp", -- css, scss
+				"cssmodules-language-server",
+				"dockerfile-language-server",
+				"graphql-language-service-cli",
+				"html-lsp",
+				"jdtls", -- java
+				"json-lsp",
+				"lua-language-server",
+				"prisma-language-server",
+				"eslint-lsp",
+				"typescript-language-server",
+				"marksman", -- markdown
+				"pyright", -- python
+				"rust-analyzer",
+				"sqlls", -- sql
+				"svelte-language-server",
+				"taplo", -- toml
+				"vue-language-server",
+				"yaml-language-server",
+
+				-- Linters & Formatters
+				"shellharden", -- bash
+				"prettierd", -- javascript, typescript, css, sccs
+				"eslint_d", -- javascript, typescript
+				"xo", -- javascript, typescript
+				"selene", -- lua
+				"stylua", -- lua
+				"mypy", -- python
+				"pylint", -- python
+				"actionlint", -- yaml
+			},
+		},
+	},
 }
 
 return M
