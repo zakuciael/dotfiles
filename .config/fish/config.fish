@@ -20,11 +20,8 @@ alias cat="bat"
 alias vim="nvim"
 alias tmux="tmux -2"
 
-# Load asdf
-source /opt/asdf-vm/asdf.fish
-
-# Setup JAVA_HOME
-source $HOME/.asdf/plugins/java/set-java-home.fish
+# Load rtx (asdf rust clone)
+rtx activate fish | source
 
 # TabTab source for packages
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
