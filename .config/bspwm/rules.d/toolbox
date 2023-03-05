@@ -1,0 +1,27 @@
+#!/bin/sh
+
+source "/home/zakku/.config/bspwm/rules.tools"
+init $@
+
+WINDOW_WIDTH=$(window_info $WINDOW_ID "Width")
+WINDOW_HEIGHT=$(window_info $WINDOW_ID "Height")
+WINDOW_POS_X=2545
+WINDOW_POS_Y=615
+
+BORDER_SIZE=5
+BORDER_STATUS=$(get_setting "border")
+
+if [[ "$CLASS_NAME" == "com-jetbrains-toolbox-entry-ToolboxEntry" ]]; then
+  if [[ "$BORDER_STATUS" == "on" ]]; then
+    X=$WINDOW_POS_X
+    Y=$WINDOW_POS_Y
+  elif [[ "$BORDER_STATUS" == "off" ]]; then
+    X=$((WINDOW_POS_X+BORDER_SIZE))
+    Y=$((WINDOW_POS_Y))
+  fi
+
+  echo "floating=on rectangle=${WINDOW_WIDTH}x${WINDOW_HEIGHT}+${X}+${Y}"
+  xdotool windowmove --sync $WINDOW_ID 0 0 &
+else
+  skip
+fi

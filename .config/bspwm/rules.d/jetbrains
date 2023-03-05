@@ -1,9 +1,9 @@
-#! /bin/sh
+#!/bin/sh
 
 source "/home/zakku/.config/bspwm/rules.tools"
 init $@
 
-WINDOW_NAME=$(window_info $WINDOW_ID "WM_NAME")
+WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
 
 output() {
   local DATA=$@

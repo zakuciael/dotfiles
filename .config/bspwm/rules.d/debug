@@ -1,9 +1,16 @@
-#! /bin/sh
+#!/bin/sh
 
 source "/home/zakku/.config/bspwm/rules.tools"
 init $@
 
-WINDOW_NAME=$(window_info $WINDOW_ID "WM_NAME")
+WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
+WINDOW_WIDTH=$(window_info $WINDOW_ID "Width")
+WINDOW_HEIGHT=$(window_info $WINDOW_ID "Height")
+
+WINDOW_ABS_X=$(window_info $WINDOW_ID "Absolute upper-left X")
+WINDOW_ABS_Y=$(window_info $WINDOW_ID "Absolute upper-left Y")
+WINDOW_REL_X=$(window_info $WINDOW_ID "Relative upper-left X")
+WINDOW_REL_Y=$(window_info $WINDOW_ID "Relative upper-left Y")
 
 log "============== DEBUG =============="
 log "  WINDOW ID: $WINDOW_ID"
@@ -11,6 +18,14 @@ log "  WINDOW NAME: $WINDOW_NAME"
 log "  CLASS NAME: $CLASS_NAME"
 log "  INSTANCE_NAME: $INSTANCE_NAME"
 log "  SETTINGS: $SETTINGS"
+log "  ========== GEOMETRY =========="
+log "  WINDOW WIDTH: $WINDOW_WIDTH"
+log "  WINDOW HEIGHT: $WINDOW_HEIGHT"
+log "  WINDOW ABS X: $WINDOW_ABS_X"
+log "  WINDOW ABS Y: $WINDOW_ABS_Y"
+log "  WINDOW REL X: $WINDOW_REL_X"
+log "  WINDOW REL Y: $WINDOW_REL_Y"
+log "  ========== GEOMETRY =========="
 log "============== DEBUG =============="
 log ""
 

@@ -23,9 +23,11 @@ for FILE in $FILES; do
     OUTPUT=$($FILE $@)
 
     if [ "$OUTPUT" != "$SKIP_KEY" ]; then
+      log "($FILE): $OUTPUT"
       RESULT+=("$OUTPUT")
     fi
   fi
 done
 
+log "FINAL OUTPUT: ${RESULT[@]}"
 echo "${RESULT[@]}"

@@ -21,8 +21,8 @@ log() {
   echo "$DATA" >> /var/log/bspwm/debug.log
 }
 
-# Returns specified info about an window
-window_info() {
+# Returns the specified info from the xprop command
+window_prop() {
   local WID=$1
   local NAME=$2
 
@@ -34,4 +34,19 @@ window_info() {
   else
     echo ""
   fi
+}
+
+# Returns the specified info from the xwininfo command
+window_info() {
+  local WID=$1
+  local NAME=$2
+
+  echo $(xwininfo -id $WID | awk -F ':' -v name="$NAME" '$0 ~ name{print $2}')
+}
+
+# Returns a value for the specified setting received from args
+get_setting() {
+  local NAME=$1
+
+  echo $(echo -n $SETTINGS | sed -e 's/\s\+/\n/g' | awk -F '=' -v name="$NAME" '$0 ~ name{print $2}')
 }
