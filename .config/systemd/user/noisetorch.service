@@ -1,0 +1,16 @@
+[Unit]
+Description = Noise cancelling service for Samson GoMic microphone
+Requires=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card1-controlC1.device
+After=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card1-controlC1.device
+After=pipewire.service
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/bin/noisetorch -i -s alsa_input.usb-Samson_Technologies_Samson_GoMic-00.analog-stereo -t 55 -log
+ExecStop=/usr/bin/noisetorch -u
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

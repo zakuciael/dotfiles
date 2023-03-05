@@ -28,9 +28,6 @@ xsetroot -cursor_name left_ptr
 # Kill if already running
 killall -9 picom sxhkd
 
-# Launch NoiseTorch on main microphone
-noisetorch -s alsa_input.usb-Samson_Technologies_Samson_GoMic-00.analog-stereo -i -o &
-
 # Polkit agent
 if [[ ! `pidof polkit-gnome-authentication-agent-1` ]]; then
   /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
