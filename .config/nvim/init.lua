@@ -1,25 +1,23 @@
-vim.defer_fn(function()
-  pcall(require, "impatient")
-end, 0)
+require("core.options")
+-- Setup lazy.nvim and plugins
 
-require "core"
-require "core.options"
+local install_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-require("core.utils").load_mappings()
+if not vim.loop.fs_stat(install_path) then
+  print("Installing lazy.nvim")
 
--- setup packer + plugins
-local fn = vim.fn
-local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    install_path,
+  })
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e222a" })
-  print "Cloning packer .."
-  fn.system { "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path }
-
-  -- install plugins + compile their configs
-  vim.cmd "packadd packer.nvim"
-  require "plugins"
-  vim.cmd "PackerSync"
+  print("lazy.nvim installed successfully")
 end
 
-pcall(require, "custom")
+vim.opt.rtp:prepend(install_path)
+
+require("lazy").setup("plugins")
