@@ -76,18 +76,18 @@
         "last_commit": "af11b33cb6ed6ec055859482bdde0353013d1378",
         "last_commit_time": "2021-07-16T21:51:05"
     },
-    "com.github.jyvern.ulauncher-ssh": {
-        "id": "com.github.jyvern.ulauncher-ssh",
-        "url": "https://github.com/jyvern/ulauncher-ssh",
-        "updated_at": "2023-01-25T16:33:19.817587",
-        "last_commit": "47168e6ea45878787536ae5670612509f5dddced",
-        "last_commit_time": "2021-08-29T16:30:14"
-    },
     "com.github.xrealneon.anilauncher": {
         "id": "com.github.xrealneon.anilauncher",
         "url": "https://github.com/xRealNeon/AniLauncher",
         "updated_at": "2023-01-26T15:43:43.452040",
         "last_commit": "c691c680168cc9266c782b55e11d1d1dc372bce5",
         "last_commit_time": "2022-05-16T13:18:42"
+    },
+    "com.github.zakuciael.ulauncher-ssh": {
+        "id": "com.github.zakuciael.ulauncher-ssh",
+        "url": "https://github.com/zakuciael/ulauncher-ssh.git",
+        "updated_at": "2023-03-05T14:37:10.919806",
+        "last_commit": "dfce3ddf2ce889a0d7c2554f24fb70dacde025cd",
+        "last_commit_time": "2023-03-05T13:35:00"
     }
 }
