@@ -26,6 +26,9 @@ rtx activate fish | source
 # Load zoxide (smarter cd)
 zoxide init fish | source
 
+# Load mcfly (better shell history)
+mcfly init fish | source
+
 # TabTab source for packages
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
 
