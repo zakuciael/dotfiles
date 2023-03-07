@@ -23,6 +23,9 @@ alias tmux="tmux -2"
 # Load rtx (asdf rust clone)
 rtx activate fish | source
 
+# Load zoxide (smarter cd)
+zoxide init fish | source
+
 # TabTab source for packages
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
 
