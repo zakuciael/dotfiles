@@ -1,10 +1,126 @@
+local load_mappings = require("core.utils").load_mappings
 local lazy_load = require("core.lazy_load")
 
 local mason_ensure_installed = { "lua-language-server" }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local on_attach = function(client, bufnr)
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
 
+-- Setup lsp capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities.textDocument.completion.completionItem = {
+  documentationFormat = { "markdown", "plaintext" },
+  snippetSupport = true,
+  preselectSupport = true,
+  insertReplaceSupport = true,
+  labelDetailsSupport = true,
+  deprecatedSupport = true,
+  commitCharactersSupport = true,
+  tagSupport = { valueSet = { 1 } },
+  resolveSupport = {
+    properties = {
+      "documentation",
+      "detail",
+      "additionalTextEdits",
+    },
+  },
+}
+
+-- Setup lsp keymaps
+local keymaps = {
+  -- Normal mode
+  n = {
+    ["gD"] = {
+      function()
+        vim.lsp.buf.declaration()
+      end,
+      "Show declaration"
+    },
+    ["gd"] = {
+      function()
+        vim.lsp.buf.definition()
+      end,
+      "Show definition"
+    },
+    ["K"] = {
+      function()
+        vim.lsp.buf.hover()
+      end,
+      "Show hover"
+    },
+    ["gi"] = {
+      function()
+        vim.lsp.buf.implementation()
+      end,
+      "Show implementation"
+    },
+    ["<leader>ls"] = {
+      function()
+        vim.lsp.buf.signature_help()
+      end,
+      "Signature help"
+    },
+    ["<leader>D"] = {
+      function()
+        vim.lsp.buf.type_definition()
+      end,
+      "Show definition type",
+    },
+    ["<leader>ca"] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      "Execute code action",
+    },
+    ["gr"] = {
+      function()
+        vim.lsp.buf.references()
+      end,
+      "Show references",
+    },
+    ["<leader>f"] = {
+      function()
+        vim.diagnostic.open_float()
+      end,
+      "Show floating diagnostic",
+    },
+    ["[d"] = {
+      function()
+        vim.diagnostic.goto_prev()
+      end,
+      "Goto prev error",
+    },
+    ["]d"] = {
+      function()
+        vim.diagnostic.goto_next()
+      end,
+      "Goto next error",
+    },
+    ["<leader>fm"] = {
+      function()
+        vim.lsp.buf.format { async = true }
+      end,
+      "Format file",
+    },
+  }
+}
+
+local function on_attach(client, bufnr)
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentRangeFormattingProvider = false
+
+  load_mappings(keymaps, { buffer = bufnr })
 end
 
 
@@ -70,7 +186,8 @@ return {
                 workspace = {
                   library = {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                    [vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true
                   },
                   maxPreload = 100000,
                   preloadFileSize = 10000
@@ -82,5 +199,11 @@ return {
       })
     end
   },
-  { "neovim/nvim-lspconfig", event = lazy_load.on_file_open }
+  {
+    "neovim/nvim-lspconfig",
+    event = lazy_load.on_file_open,
+    config = function()
+      require("lspconfig.ui.windows").default_options.border = "single"
+    end
+  },
 }

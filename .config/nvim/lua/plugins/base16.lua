@@ -23,27 +23,51 @@ return {
 
       require("base16-colorscheme").setup(colors, { notify = false })
 
+      local lsp = {
+        error = colors.base08,
+        warn = colors.base0A,
+        info = colors.base0B,
+        hint = colors.base0C
+      }
+
+      local background = colors.base00
+      local lualine_bg = colors.base01
+      local lualine_accent = colors.base02
+
+      -- LSP diagnostics highlights
+      vim.api.nvim_set_hl(0, "DiagnosticSignError", { fg = lsp.error, bg = background })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = lsp.error, bg = background })
+
+      vim.api.nvim_set_hl(0, "DiagnosticSignWarn", { fg = lsp.warn, bg = background })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = lsp.warn, bg = background })
+
+      vim.api.nvim_set_hl(0, "DiagnosticSignInfo", { fg = lsp.info, bg = background })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = lsp.info, bg = background })
+
+      vim.api.nvim_set_hl(0, "DiagnosticSignHint", { fg = lsp.hint, bg = background })
+      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = lsp.hint, bg = background })
+
       -- Lualine highlights
 
       -- LSP status component
-      vim.api.nvim_set_hl(0, "lualine_lsp_status", { fg = colors.base0D, bg = colors.base01 })
+      vim.api.nvim_set_hl(0, "lualine_lsp_status", { fg = colors.base0D, bg = lualine_bg })
 
       -- LSP progress component
-      vim.api.nvim_set_hl(0, "lualine_lsp_progress", { fg = colors.base0B, bg = colors.base01 })
+      vim.api.nvim_set_hl(0, "lualine_lsp_progress", { fg = colors.base0B, bg = lualine_bg })
 
       -- LSP diagnostic component
-      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_error", { fg = colors.base08, bg = colors.base01 })
-      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_warn", { fg = colors.base0A, bg = colors.base01 })
-      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_info", { fg = colors.base0B, bg = colors.base01 })
-      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_hint", { fg = colors.base0E, bg = colors.base01 })
+      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_error", { fg = lsp.error, bg = lualine_bg })
+      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_warn", { fg = lsp.warn, bg = lualine_bg })
+      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_info", { fg = lsp.info, bg = lualine_bg })
+      vim.api.nvim_set_hl(0, "lualine_lsp_diagnostic_hint", { fg = lsp.hint, bg = lualine_bg })
 
       -- CWD component
-      vim.api.nvim_set_hl(0, "lualine_cwd_icon", { fg = colors.base00, bg = colors.base08 })
-      vim.api.nvim_set_hl(0, "lualine_cwd_text", { fg = colors.base07, bg = colors.base02 })
+      vim.api.nvim_set_hl(0, "lualine_cwd_icon", { fg = background, bg = colors.base08 })
+      vim.api.nvim_set_hl(0, "lualine_cwd_text", { fg = colors.base07, bg = lualine_accent })
 
       -- Progress component
-      vim.api.nvim_set_hl(0, "lualine_progress_icon", { fg = colors.base00, bg = colors.base0B })
-      vim.api.nvim_set_hl(0, "lualine_progress_text", { fg = colors.base0B, bg = colors.base02 })
+      vim.api.nvim_set_hl(0, "lualine_progress_icon", { fg = background, bg = colors.base0B })
+      vim.api.nvim_set_hl(0, "lualine_progress_text", { fg = colors.base0B, bg = lualine_accent })
     end
   }
 }

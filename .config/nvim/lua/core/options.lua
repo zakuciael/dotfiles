@@ -41,6 +41,50 @@ opt.undofile = true
 -- Interval for writing swap file to disk, also used by gitsigns
 opt.updatetime = 250
 
+
+-- Setup lsp options
+
+local function lsp_symbol(name, icon)
+  local highlight = "DiagnosticSign" .. name
+  vim.fn.sign_define(highlight, { text = icon, numhl = highlight, texthl = highlight })
+end
+
+lsp_symbol("Error", "")
+lsp_symbol("Info", "")
+lsp_symbol("Hint", "")
+lsp_symbol("Warn", "")
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = "",
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = true,
+})
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  { border = "single" }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  { border = "single", focusable = false, relative = "cursor" }
+)
+
+vim.notify = function(msg, level)
+  if msg:match("exit code") then
+    return
+  end
+
+  if level == vim.log.levels.ERROR then
+    vim.api.nvim_err_writeln(msg)
+  else
+    vim.api.nvim_echo({ { msg } }, true, {})
+  end
+end
+
 -- Disable some builtin vim plugins
 local default_plugins = {
   "2html_plugin",

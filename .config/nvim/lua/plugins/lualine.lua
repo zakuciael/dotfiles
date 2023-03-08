@@ -130,9 +130,9 @@ return {
           {
             "diagnostics",
             separator = "",
-            sources = { "nvim_diagnostic", "nvim_lsp", "vim_lsp" },
+            sources = { "nvim_lsp", "vim_lsp" },
             sections = { "error", "warn", "info", "hint" },
-            symbols = { error = " ", warn = " ", info = " ", hint = "ﯧ " },
+            symbols = { error = " ", warn = " ", info = " ", hint = " " },
             diagnostics_color = {
               error = "lualine_lsp_diagnostic_error",
               warn = "lualine_lsp_diagnostic_warn",
