@@ -56,15 +56,20 @@ return {
   { "rafamadriz/friendly-snippets", event = { "InsertEnter" } },
   {
     "hrsh7th/nvim-cmp",
-    dependencies = { "rafamadriz/friendly-snippets" },
     opts = {
+      completion = {
+        completeopt = "menu,menuone",
+      },
       window = {
         completion = {
+          side_padding = 0,
           border = border("CmpBorder"),
-          winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+          -- winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
+          scrollbar = false
         },
         documentation = {
           border = border("CmpDocBorder"),
+          -- winhighlight = "Normal:CmpDoc",
         },
       },
       snippet = {
@@ -73,26 +78,73 @@ return {
         end
       },
       formatting = {
-        format = function(_, vim_item)
-          vim_item.kind = string.format("%s %s", lspkind_icons[vim_item.kind], vim_item.kind)
-          return vim_item
+        format = function(_, item)
+          item.kind = string.format("%s %s", lspkind_icons[item.kind], item.kind)
+          return item
         end
       },
-      mapping = {
-        -- TODO: mapping
-      },
+      mapping = require("cmp").mapping.preset.insert({
+        ["<C-p>"] = require("cmp").mapping.select_prev_item(),
+        ["<C-n>"] = require("cmp").mapping.select_next_item(),
+        ["<C-d>"] = require("cmp").mapping.scroll_docs(-4),
+        ["<C-f>"] = require("cmp").mapping.scroll_docs(),
+        ["<C-Space>"] = require("cmp").mapping.complete(),
+        ["<C-e>"] = require("cmp").mapping.close(),
+        ["<CR>"] = require("cmp").mapping.confirm({
+          behavior = require("cmp").ConfirmBehavior.Replace,
+          select = false
+        }),
+        ["<Tab>"] = require("cmp").mapping(function(fallback)
+          local cmp = require("cmp")
+
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif require("luasnip").expand_or_jumpable() then
+            vim.fn.feedkeys(
+              vim.api.nvim_replace_termcodes(
+                "<Plug>luasnip-expand-or-jump",
+                true,
+                true,
+                true
+              ),
+              ""
+            )
+          else
+            fallback()
+          end
+        end),
+        ["<S-Tab>"] = require("cmp").mapping(function(fallback)
+          local cmp = require("cmp")
+
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif require("luasnip").jumpable(-1) then
+            vim.fn.feedkeys(
+              vim.api.nvim_replace_termcodes(
+                "<Plug>luasnip-jump-prev",
+                true,
+                true,
+                true
+              ),
+              ""
+            )
+          else
+            fallback()
+          end
+        end)
+      }),
       sources = {
         { name = "luasnip" },
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "nvim_lua" },
         { name = "path" },
-      }
+        { name = 'nvim_lsp_signature_help' }
+      },
     }
   },
   {
     "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets", "hrsh7th/nvim-cmp" },
     config = function(_, opts)
       local luasnip = require("luasnip")
       local luasnip_vscode_loader = require("luasnip.loaders.from_vscode")
@@ -119,9 +171,10 @@ return {
       updateevents = "TextChanged,TextChangedI",
     }
   },
-  { "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
-  { "hrsh7th/cmp-nvim-lua", dependencies = { "saadparwaiz1/cmp_luasnip" } },
-  { "hrsh7th/cmp-nvim-lsp", dependencies = { "hrsh7th/cmp-nvim-lua" } },
-  { "hrsh7th/cmp-buffer", dependencies = { "hrsh7th/cmp-nvim-lsp" } },
-  { "hrsh7th/cmp-path", dependencies = { "hrsh7th/cmp-buffer" } }
+  "saadparwaiz1/cmp_luasnip",
+  "hrsh7th/cmp-nvim-lua",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-nvim-lsp-signature-help"
 }
