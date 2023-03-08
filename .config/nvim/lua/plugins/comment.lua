@@ -17,20 +17,12 @@ return {
       },
       {
         "gcc",
-        function()
-          -- https://github.com/numToStr/Comment.nvim/blob/6821b3ae27a57f1f3cf8ed030e4a55d70d0c4e43/lua/Comment/init.lua#L103
-          return vim.api.nvim_get_vvar('count') == 0 and '<Plug>(comment_toggle_linewise_current)'
-                    or '<Plug>(comment_toggle_linewise_count)'
-        end,
+        nil,
         mode = "n"
       },
       {
         "gbc",
-        function()
-          -- https://github.com/numToStr/Comment.nvim/blob/6821b3ae27a57f1f3cf8ed030e4a55d70d0c4e43/lua/Comment/init.lua#L107
-          return vim.api.nvim_get_vvar('count') == 0 and '<Plug>(comment_toggle_blockwise_current)'
-                    or '<Plug>(comment_toggle_blockwise_count)'
-        end,
+        nil,
         mode = "n"
       }
     },
