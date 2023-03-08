@@ -6,17 +6,26 @@ init $@
 WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
 
 output() {
-  local DATA=$@
-  echo "$DATA desktop=1"
+  local ARGS=$@
+  echo "desktop=1 $ARGS"
+}
+
+floating() {
+  local ARGS=$@
+  output "state=floating center=on $ARGS"
 }
 
 if [[ "$CLASS_NAME" == jetbrains-* ]]; then
   if [[ "$WINDOW_NAME" = "splash" ]]; then
-    output "state=floating border=off"
+    floating "border=off"
   elif [[ "$WINDOW_NAME" == "Welcome to "* ]]; then
-    output "state=floating"
+    floating
   elif [[ "$WINDOW_NAME" == "Import "* ]] && [[ "$WINDOW_NAME" == *"Settings" ]]; then
-    output "state=floating"
+    floating
+  elif [[ "$WINDOW_NAME" == *" and Plugin Updates" ]]; then
+    floating
+  elif [[ "$WINDOW_NAME" == *"User Agreement" ]]; then
+    floating
   fi
 else
  skip
