@@ -1,4 +1,4 @@
-local merge_tb = vim.tbl_deep_extend
+local load_mappings = require("core.utils").load_mappings
 
 local keymaps = {
   -- Insert mode
@@ -32,15 +32,4 @@ local keymaps = {
   }
 }
 
-for mode, mode_values in pairs(keymaps) do
-  local default_opts = { mode = mode }
-
-  for keybind, mapping in pairs(mode_values) do
-    local opts = merge_tb("force", default_opts, mapping.opts or {})
-
-    mapping.opts, opts.mode = nil, nil
-    opts.desc = mapping[2]
-
-    vim.keymap.set(mode, keybind, mapping[1], opts)
-  end
-end
+load_mappings(keymaps)
