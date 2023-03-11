@@ -1,7 +1,7 @@
 [Unit]
 Description = Noise cancelling service for Samson GoMic microphone
-Requires=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card1-controlC1.device
-After=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card1-controlC1.device
+Requires=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card0-controlC0.device
+After=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card0-controlC0.device
 After=pipewire.service
 
 [Service]
