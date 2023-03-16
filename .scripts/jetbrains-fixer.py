@@ -1,1 +1,1 @@
-/home/zakku/Development/Projects/Other/Jetbrains Linux Fixer/jetbrains-fixer.py
+/home/zakku/dev/side/jetbrains-linux-fixer/jetbrains-fixer.py
