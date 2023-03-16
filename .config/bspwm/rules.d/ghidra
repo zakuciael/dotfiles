@@ -1,0 +1,24 @@
+#!/bin/sh
+
+source "/home/zakku/.config/bspwm/rules.tools"
+init $@
+
+WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
+
+output() {
+  local ARGS=$@
+  echo "desktop=1 $ARGS"
+}
+
+floating() {
+  local ARGS=$@
+  output "state=floating center=on $ARGS"
+}
+
+if [[ "$CLASS_NAME" == "ghidra-Ghidra" ]]; then
+  if [[ "$WINDOW_NAME" = "win0" ]]; then
+    floating "border=off"
+  fi
+else
+ skip
+fi

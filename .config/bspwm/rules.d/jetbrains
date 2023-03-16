@@ -15,7 +15,7 @@ floating() {
   output "state=floating center=on $ARGS"
 }
 
-if [[ "$CLASS_NAME" == jetbrains-* ]]; then
+if [[ "$CLASS_NAME" == jetbrains-* ]] || [[ "$CLASS_NAME" == "kotlinx-coroutines-scheduling-CoroutineScheduler\$Worker" ]]; then
   if [[ "$WINDOW_NAME" = "splash" ]]; then
     floating "border=off"
   elif [[ "$WINDOW_NAME" == "Welcome to "* ]]; then
