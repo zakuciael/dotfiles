@@ -89,5 +89,12 @@
         "updated_at": "2023-03-05T14:37:10.919806",
         "last_commit": "dfce3ddf2ce889a0d7c2554f24fb70dacde025cd",
         "last_commit_time": "2023-03-05T13:35:00"
+    },
+    "com.github.zakuciael.ulauncher-system-management-direct": {
+        "id": "com.github.zakuciael.ulauncher-system-management-direct",
+        "url": "https://github.com/zakuciael/ulauncher-system-management-direct",
+        "updated_at": "2023-03-12T12:37:34.220481",
+        "last_commit": "a0d37f658e93ce67bdd1de9b3b99eab0c639ca59",
+        "last_commit_time": "2023-03-12T11:35:16"
     }
 }
