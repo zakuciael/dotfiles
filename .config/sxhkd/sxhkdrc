@@ -15,16 +15,16 @@ super + F1
   alacritty --class sxhkd_keys -t "Sxhkd Keybinds" -e ~/.scripts/sxhkd-help
 
 # Control audio playback
-{XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
-	playerctl {stop, play-pause, previous, next}
+{_,super + }{XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
+  ~/.scripts/player.sh {_,-s} {stop, toggle, prev, next}
 
 # Control volume
-{XF86AudioLowerVolume, XF86AudioRaiseVolume}
-  pactl set-sink-volume @DEFAULT_SINK@ {-5%, +5%}
+{_,super + }{XF86AudioLowerVolume, XF86AudioRaiseVolume}
+  ~/.scripts/player.sh {_,-s} vol -- {-5%, +5%}
 
 # Mute volume
-XF86AudioMute
-  pactl set-sink-mute @DEFAULT_SINK@ toggle
+{_,super + }XF86AudioMute
+  ~/.scripts/player.sh {_,-s} mute
 
 # Make a screenshot
 Print
