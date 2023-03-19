@@ -5,15 +5,36 @@ DUNST_TAG="player_volume"
 
 function get_system_vol() {
   local SYSTEM_SINK_ID=$(pactl list short | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
-  local SYSTEM_VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $62 + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-
-  echo $SYSTEM_VOLUME
+  echo $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $62 + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
 }
 
 function get_player_vol() {
-  local VOLUME_PROC=$(LC_NUMERIC=C printf "%.0f" $(echo "$(playerctl -p spotify volume) * 100" | bc))
+  echo $(LC_NUMERIC=C printf "%.0f" $(echo "$(playerctl -p spotify volume) * 100" | bc))
+}
 
-  echo $VOLUME_PROC
+function get_system_mute() {
+  echo $(pactl get-sink-mute @DEFAULT_SINK@ | awk -F" " '{print $2}')
+}
+
+function get_player_mute() {
+  if [[ $(echo "$(playerctl -p spotify volume) <= 0" | bc) -eq 1 ]]; then
+    echo "yes"
+  else
+    echo "no"
+  fi
+}
+
+function notify_vol_change() {
+  local VOL=$1
+  local MSG=$2
+
+  dunstify -a "player_volume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$VOL" "$MSG"
+}
+
+function notify_mute_change() {
+  local MSG=$1
+
+  dunstify -a "player_volume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"0" "$MSG"
 }
 
 function fallback_cmd() {
@@ -68,11 +89,8 @@ function volume() {
 
   if [ $SPOTIFY = false ]; then
     pactl set-sink-volume @DEFAULT_SINK@ $1
-
-    local SYSTEM_SINK_ID=$(pactl list short | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
-    local SYSTEM_VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $62 + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-
-    dunstify -a "player_volume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$SYSTEM_VOLUME" "Volume: ${SYSTEM_VOLUME}%"
+    local VOL=$(get_system_vol)
+    notify_vol_change $VOL "System volume: $VOL%"
     return
   fi
 
@@ -87,7 +105,7 @@ function volume() {
   if [[ $INPUT =~ $REGEX ]]; then
 
     if [ ! -z ${BASH_REMATCH[1]} ]; then
-      if [[ $(echo "$(playerctl -p spotify volume) <= 0" | bc) -eq 1 ]] && [[ ! -f /tmp/spotify_vol ]]; then
+      if [[ $(get_player_mute) = "yes" ]] && [[ ! -f /tmp/spotify_vol ]]; then
         echo "Warning: Spotify is already muted, but the temp file doesn't exist. Setting default value.."
         local VOLUME=0.30
       elif [[ -f /tmp/spotify_vol ]]; then
@@ -106,8 +124,9 @@ function volume() {
   fi
 
   playerctl -p spotify volume $VOLUME
-  local VOLUME_PROC=$(LC_NUMERIC=C printf "%.0f" $(echo "$(playerctl -p spotify volume) * 100" | bc))
-  dunstify -a "player_volume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$VOLUME_PROC" "Spotify Volume: ${VOLUME_PROC}%"
+
+  local VOL=$(get_player_vol)
+  notify_vol_change $VOL "Spotify volume: $VOL%"
 }
 
 function loop() {
@@ -126,20 +145,19 @@ function loop() {
 function toggle_mute() {
   if [ $SPOTIFY = false ]; then
     pactl set-sink-mute @DEFAULT_SINK@ toggle
+    local MUTED=$(get_system_mute)
 
-    local MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | awk -F" " '{print $2}')
-
-    if [ $MUTED = "yes" ]; then
-      local MSG="Volume muted"
+    if [[ $MUTED = "yes" ]]; then
+      notify_mute_change "System muted"
     else
-      local MSG="Volume unmuted"
+      local VOL=$(get_system_vol)
+      notify_vol_change $VOL "System volume: $VOL%"
     fi
 
-    dunstify -a "player_volume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$DUNST_TAG "$MSG"
     return
   fi
 
-  if [[ $(echo "$(playerctl -p spotify volume) <= 0" | bc) -eq 1 ]] && [[ ! -f /tmp/spotify_vol ]]; then
+  if [[ $(get_player_mute) = "yes" ]] && [[ ! -f /tmp/spotify_vol ]]; then
     echo "Warning: Spotify is already muted, but the temp file doesn't exist. Setting default value.."
     local VOLUME=0.30
   elif [[ -f /tmp/spotify_vol ]]; then
@@ -151,6 +169,13 @@ function toggle_mute() {
   fi
 
   playerctl -p spotify volume $VOLUME
+
+  if [[ $VOLUME -eq 0 ]]; then
+    notify_mute_change "Spotify muted"
+  else
+    local VOL=$(get_player_vol)
+    notify_vol_change $VOL "Spotify volume: $VOL%"
+  fi
 }
 
 function toggle_shuffle() {
