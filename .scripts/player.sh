@@ -1,6 +1,20 @@
 #/bin/bash
 
 SPOTIFY=false
+DUNST_TAG="player_volume"
+
+function get_system_vol() {
+  local SYSTEM_SINK_ID=$(pactl list short | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
+  local SYSTEM_VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $62 + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+
+  echo $SYSTEM_VOLUME
+}
+
+function get_player_vol() {
+  local VOLUME_PROC=$(LC_NUMERIC=C printf "%.0f" $(echo "$(playerctl -p spotify volume) * 100" | bc))
+
+  echo $VOLUME_PROC
+}
 
 function fallback_cmd() {
   local CMD=$1
@@ -54,6 +68,11 @@ function volume() {
 
   if [ $SPOTIFY = false ]; then
     pactl set-sink-volume @DEFAULT_SINK@ $1
+
+    local SYSTEM_SINK_ID=$(pactl list short | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
+    local SYSTEM_VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $62 + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+
+    dunstify -a "player_volume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$SYSTEM_VOLUME" "Volume: ${SYSTEM_VOLUME}%"
     return
   fi
 
@@ -87,6 +106,8 @@ function volume() {
   fi
 
   playerctl -p spotify volume $VOLUME
+  local VOLUME_PROC=$(LC_NUMERIC=C printf "%.0f" $(echo "$(playerctl -p spotify volume) * 100" | bc))
+  dunstify -a "player_volume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$VOLUME_PROC" "Spotify Volume: ${VOLUME_PROC}%"
 }
 
 function loop() {
@@ -105,6 +126,16 @@ function loop() {
 function toggle_mute() {
   if [ $SPOTIFY = false ]; then
     pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+    local MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | awk -F" " '{print $2}')
+
+    if [ $MUTED = "yes" ]; then
+      local MSG="Volume muted"
+    else
+      local MSG="Volume unmuted"
+    fi
+
+    dunstify -a "player_volume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$DUNST_TAG "$MSG"
     return
   fi
 
