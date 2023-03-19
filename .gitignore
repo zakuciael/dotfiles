@@ -181,6 +181,8 @@ caches/
 .asdf/
 .adobe-reader*/
 .themes/
+.vscode/extensions/
+.tabnine/
 
 ## .config abusers
 .config/opera/
@@ -218,6 +220,9 @@ caches/
 .config/gtk-4.0/*.css
 .config/gtk-4.0/assets/
 .config/gtk-4.0/windows-assets/
+.config/Code/
+.config/HTTPie/
+.config/TabNine/
 
 # 1pass plugin settings
 .op/
