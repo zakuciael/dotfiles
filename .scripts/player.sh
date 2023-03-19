@@ -46,7 +46,7 @@ function to_floating() {
       local VOLUME=$(printf "0.%02.0f" $1)
   fi
 
-  echo $VOLUME &> /dev/null
+  echo $VOLUME
 }
 
 function volume() {
@@ -66,6 +66,7 @@ function volume() {
   local REGEX="^([-+])?([[:digit:]]+)%?$"
 
   if [[ $INPUT =~ $REGEX ]]; then
+
     if [ ! -z ${BASH_REMATCH[1]} ]; then
       if [[ $(echo "$(playerctl -p spotify volume) <= 0" | bc) -eq 1 ]] && [[ ! -f /tmp/spotify_vol ]]; then
         echo "Warning: Spotify is already muted, but the temp file doesn't exist. Setting default value.."
