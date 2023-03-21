@@ -1,0 +1,12 @@
+#!/bin/sh
+
+source "/home/zakku/.config/bspwm/rules.tools"
+init $@
+
+WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
+
+if [[ "$WINDOW_NAME" == "Spotify" ]] && [[ "$CLASS_NAME" != "Spotify" ]]; then
+  echo "state=floating"
+else
+ skip
+fi
