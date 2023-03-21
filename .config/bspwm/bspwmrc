@@ -55,7 +55,7 @@ if [[ ! `pidof server_linux_no` ]]; then
 fi
 
 # Run autostart applications
-dex -a &
+systemctl --user start xdg-desktop-autostart.target
 
 # Fix Java applications
 wmname LG3D
