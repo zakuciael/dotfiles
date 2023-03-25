@@ -7,7 +7,11 @@ polybar-msg cmd quit
 while pgrep -u $USER -x polybar; do sleep 0.1; done
 
 # Launch bars
-polybar main &
+
+if xrandr --listactivemonitors | grep -q "HDMI-1"; then
+  polybar main &
+fi
+
 polybar vertical &
 polybar external &
 

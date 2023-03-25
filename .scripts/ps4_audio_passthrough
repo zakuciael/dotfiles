@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PS4_NODE_NAME="alsa_input.pci-0000_00_1b.0.analog-stereo"
+PC_NODE_NAME="alsa_output.pci-0000_00_1b.0.analog-stereo"
+
+function connect() {
+  /usr/bin/pw-link -v $PS4_NODE_NAME $PC_NODE_NAME &>/dev/null &2>&1
+}
+
+function disconnect() {
+  /usr/bin/pw-link -d $PS4_NODE_NAME $PC_NODE_NAME &>/dev/null &2>&1
+}
+
+if /usr/bin/pw-link -l | grep -q "$PS4_NODE_NAME"; then
+  disconnect
+else
+  connect
+fi

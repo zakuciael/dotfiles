@@ -1,0 +1,83 @@
+#!/bin/bash
+
+PS4_MONITOR="HDMI-1"
+TEMP_MAIN_MONITOR="DP-1"
+
+ENABLED_PROFILE="ps4"
+# Note: HDMI-1 is disabled but not for bspwm, breaking navigation via keybinds
+ENABLED_MONITOR_ORDER=(DP-1 DVI-D-2 HDMI-1)
+
+DISABLED_PROFILE="default"
+DISABLED_MONITOR_ORDER=(HDMI-1 DP-1 DVI-D-2)
+
+DESKTOPS_PER_MONITOR=3
+
+function load_profile() {
+  local PROFILE=$1
+
+  echo "Loading autorandr profile=$PROFILE"
+  autorandr -l $1
+}
+
+function notify() {
+  local MSG="$@"
+
+  dunstify -a "ps4_monitor_switch" -u low -i video-display -h string:x-dunst-stack-tag:ps4_monitor_switch "$MSG"
+}
+
+function enable_monitor_switch() {
+  load_profile $ENABLED_PROFILE
+
+  # Temp desktop
+  bspc monitor $TEMP_MAIN_MONITOR -a Desktop
+
+  # Move everything to the PS4 monitor to reoreder desktops
+  for DESKTOP in $(bspc query -D -m $TEMP_MAIN_MONITOR); do
+    bspc desktop $DESKTOP --to-monitor $PS4_MONITOR
+  done
+
+  # Temp desktop
+  bspc monitor $PS4_MONITOR -a Desktop
+
+  # Now move everything back to the PS4 monitor
+  for DESKTOP in $(bspc query -D -m $PS4_MONITOR); do
+    bspc desktop $DESKTOP --to-monitor $TEMP_MAIN_MONITOR
+  done
+
+  # Remove temp desktops
+  bspc desktop Desktop --remove
+
+  # Change monitor order
+  bspc wm -O $ENABLED_MONITOR_ORDER
+}
+
+function disable_monitor_switch() {
+  load_profile $DISABLED_PROFILE
+
+  for DESKTOP in $(bspc query -D -m $TEMP_MAIN_MONITOR | sed "$DESKTOPS_PER_MONITOR"q); do
+    bspc desktop $DESKTOP --to-monitor $PS4_MONITOR
+  done
+
+  # Remove temp desktop
+  bspc desktop Desktop --remove
+
+  # Change monitor order
+  bspc wm -O $DISABLED_MONITOR_ORDER
+
+}
+
+if xrandr --listactivemonitors | grep -q "$PS4_MONITOR"; then
+    notify "Enabling PS4 monitor"
+    sleep 1
+    enable_monitor_switch
+else
+    notify "Disabling PS4 monitor"
+    sleep 1
+    disable_monitor_switch
+fi
+
+# Run polybar
+[ -x $HOME/.config/polybar/launch.sh ] && $HOME/.config/polybar/launch.sh &
+
+# Restore wallpapers
+nitrogen --restore &
