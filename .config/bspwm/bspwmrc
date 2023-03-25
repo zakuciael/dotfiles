@@ -54,6 +54,11 @@ if [[ ! `pidof server_linux_no` ]]; then
   /opt/discord-rpc/server_linux_no_tray_debug &
 fi
 
+# Setup lock screen
+if [[ ! `pidof xss-lock` ]]; then
+  xss-lock -- betterlockscreen -l --display 1 &
+fi
+
 # Run autostart applications
 systemctl --user start xdg-desktop-autostart.target
 
