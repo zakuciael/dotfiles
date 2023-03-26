@@ -1,35 +1,47 @@
 #!/bin/bash
 
-function get_node_name() {
-  local SEARCH=$1
+function find_node_ports() {
+  local REGEX=$1
 
-  pw-link -io | grep -o -E "$SEARCH" | head -1
+  pw-link -io | grep -E "$REGEX" | grep -Ev "monitor_\w+"
 }
 
-function connect() {
-  local INPUT=$1
-  local OUTPUT=$2
+function notify() {
+  local MSG="$@"
 
-  /usr/bin/pw-link $INPUT $OUTPUT
+  dunstify -a "ps4_audio_passthrough" -u low -i audio-volume-high -h string:x-dunst-stack-tag:ps4_audio_passthrough "$MSG"
 }
 
-function disconnect() {
-  local INPUT=$1
-  local OUTPUT=$2
+PS4_PORTS=($(find_node_ports "alsa_input.pci-0000_00_1b.0.analog-stereo(.[0-9]+)?"))
+PC_PORTS=($(find_node_ports "alsa_output.pci-0000_00_1b.0.analog-stereo"))
 
-  /usr/bin/pw-link -d $INPUT $OUTPUT
+function link() {
+  for i in $(seq ${#PS4_PORTS[@]}); do
+    local PS4_PORT=${PS4_PORTS[$i - 1]} 
+    local PC_PORT=${PC_PORTS[$i - 1]}
+
+    echo "Linking $PS4_PORT to $PC_PORT"
+    /usr/bin/pw-link $PS4_PORT $PC_PORT
+  done
 }
 
-PS4_NODE_NAME=$(get_node_name "alsa_input.pci-0000_00_1b.0.analog-stereo(.[0-9]+)?")
-PC_NODE_NAME=$(get_node_name "alsa_output.pci-0000_00_1b.0.analog-stereo")
+function unlink() {
+  for i in $(seq ${#PS4_PORTS[@]}); do
+    local PS4_PORT=${PS4_PORTS[$i - 1]} 
+    local PC_PORT=${PC_PORTS[$i - 1]}
 
-echo "Detected PS4 node name: $PS4_NODE_NAME"
-echo "Detected PC node name: $PC_NODE_NAME"
+    echo "Unlinking $PS4_PORT from $PC_PORT"
+    /usr/bin/pw-link -d $PS4_PORT $PC_PORT
+  done
+}
 
-if /usr/bin/pw-link -l | grep -q "$PS4_NODE_NAME"; then
-  echo "Removng PS4 audio passthrough"
-  disconnect $PS4_NODE_NAME $PC_NODE_NAME
+echo "PS4 Ports: ${PS4_PORTS[@]}"
+echo "PC Ports: ${PC_PORTS[@]}"
+
+if /usr/bin/pw-link -l | grep -q "${PS4_PORTS[0]}"; then
+  notify "Disabling PS4 audio passthrough"
+  unlink
 else
-  echo "Creating PS4 audio passthrough"
-  connect $PS4_NODE_NAME $PC_NODE_NAME
+  notify "Enabling PS4 audio passthrough"
+  link
 fi
