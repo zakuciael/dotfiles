@@ -28,13 +28,13 @@ function notify_vol_change() {
   local VOL=$1
   local MSG=$2
 
-  dunstify -a "player_volume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$VOL" "$MSG"
+  dunstify -u low -i audio-volume-high -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"$VOL" "$MSG"
 }
 
 function notify_mute_change() {
   local MSG=$1
 
-  dunstify -a "player_volume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"0" "$MSG"
+  dunstify -u low -i audio-volume-muted-symbolic -h string:x-dunst-stack-tag:$DUNST_TAG -h int:value:"0" "$MSG"
 }
 
 function fallback_cmd() {
@@ -88,10 +88,21 @@ function volume() {
   local INPUT=$1
 
   if [ $SPOTIFY = false ]; then
-    pactl set-sink-volume @DEFAULT_SINK@ $1
-    local VOL=$(get_system_vol)
-    notify_vol_change $VOL "System volume: $VOL%"
-    return
+    local MUTED=$(get_system_mute)
+
+    if [ $1 = 0 ]; then
+      toggle_mute
+      return
+    elif [ $1 != 0 ] && [ $MUTED = "yes" ]; then
+      pactl set-sink-volume @DEFAULT_SINK@ $1
+      toggle_mute
+      return
+    else
+      pactl set-sink-volume @DEFAULT_SINK@ $1
+      local VOL=$(get_system_vol)
+      notify_vol_change $VOL "System volume: $VOL%"
+      return
+    fi
   fi
 
   if [ -z $INPUT ]; then
