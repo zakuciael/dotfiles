@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 SPOTIFY=false
 DUNST_TAG="player_volume"

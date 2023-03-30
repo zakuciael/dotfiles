@@ -16,15 +16,15 @@ super + F1
 
 # Control audio playback
 {_,super + }{XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
-  ~/.scripts/player.sh {_,-s} {stop, toggle, prev, next}
+  ~/.scripts/player {_,-s} {stop, toggle, prev, next}
 
 # Control volume
 {_,super + }{XF86AudioLowerVolume, XF86AudioRaiseVolume}
-  ~/.scripts/player.sh {_,-s} vol -- {-5%, +5%}
+  ~/.scripts/player {_,-s} vol -- {-5%, +5%}
 
 # Mute volume
 {_,super + }XF86AudioMute
-  ~/.scripts/player.sh {_,-s} mute
+  ~/.scripts/player {_,-s} mute
 
 # Make a screenshot
 Print
