@@ -4,8 +4,8 @@ SPOTIFY=false
 DUNST_TAG="player_volume"
 
 function get_system_vol() {
-  local SYSTEM_SINK_ID=$(pactl list short | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
-  echo $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $62 + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+  local SYSTEM_SINK_ID=$(pactl list short | grep RUNNING | grep -P "alsa_output\.pci-([[:alnum:][:punct:]]+)analog-stereo" | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
+  echo $(pactl list sinks | grep -a15 "Sink #$SYSTEM_SINK_ID" | grep '^[[:space:]]Volume:' | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
 }
 
 function get_player_vol() {
