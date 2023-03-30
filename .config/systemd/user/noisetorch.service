@@ -7,7 +7,8 @@ After=pipewire.service
 [Service]
 Type=simple
 RemainAfterExit=yes
-ExecStart=/usr/bin/noisetorch -i -s alsa_input.usb-Samson_Technologies_Samson_GoMic-00.analog-stereo -t 55 -log
+ExecStartPre=/bin/bash -c "/bin/systemctl --user set-environment DEVICE_ID=$$(/usr/bin/noisetorch -l | /usr/bin/grep -Po 'alsa_input\\.usb-Samson_Technologies_Samson_GoMic-([[:alnum:][:punct:]]+)analog-stereo([[:alnum:][:punct:]]+)?' | /usr/bin/head -1)"
+ExecStart=/usr/bin/noisetorch -i -s $DEVICE_ID -t 55 -log
 ExecStop=/usr/bin/noisetorch -u
 Restart=on-failure
 RestartSec=3
