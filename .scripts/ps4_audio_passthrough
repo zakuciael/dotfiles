@@ -7,9 +7,10 @@ function find_node_ports() {
 }
 
 function notify() {
-  local MSG="$@"
+  local ICON=$1
+  local MSG="${@:2}"
 
-  dunstify -a "ps4_audio_passthrough" -u low -i audio-volume-high -h string:x-dunst-stack-tag:ps4_audio_passthrough "$MSG"
+  dunstify -a "ps4_audio_passthrough" -u low -i $ICON -h string:x-dunst-stack-tag:ps4_audio_passthrough "$MSG"
 }
 
 PS4_PORTS=($(find_node_ports "alsa_input\.pci-([[:alnum:][:punct:]]+)analog-stereo"))
@@ -39,9 +40,9 @@ echo "PS4 Ports: ${PS4_PORTS[@]}"
 echo "PC Ports: ${PC_PORTS[@]}"
 
 if /usr/bin/pw-link -l | grep -q "${PS4_PORTS[0]}"; then
-  notify "Disabling PS4 audio passthrough"
+  notify "audio-volume-muted-symbolic" "Disabling PS4 audio passthrough"
   unlink
 else
-  notify "Enabling PS4 audio passthrough"
+  notify "audio-volume-high-symbolic" "Enabling PS4 audio passthrough"
   link
 fi

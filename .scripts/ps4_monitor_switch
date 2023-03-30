@@ -22,7 +22,7 @@ function load_profile() {
 function notify() {
   local MSG="$@"
 
-  dunstify -a "ps4_monitor_switch" -u low -i video-display -h string:x-dunst-stack-tag:ps4_monitor_switch "$MSG"
+  dunstify -a "ps4_monitor_switch" -u low -i video-display-symbolic -h string:x-dunst-stack-tag:ps4_monitor_switch "$MSG"
 }
 
 function enable_monitor_switch() {
