@@ -3,7 +3,7 @@
 function find_node_ports() {
   local REGEX=$1
 
-  pw-link -io | grep -E "$REGEX" | grep -Ev "monitor_\w+"
+  pw-link -io | grep -P "$REGEX" | grep -Ev "monitor_\w+"
 }
 
 function notify() {
@@ -12,8 +12,8 @@ function notify() {
   dunstify -a "ps4_audio_passthrough" -u low -i audio-volume-high -h string:x-dunst-stack-tag:ps4_audio_passthrough "$MSG"
 }
 
-PS4_PORTS=($(find_node_ports "alsa_input.pci-0000_00_1b.0.analog-stereo(.[0-9]+)?"))
-PC_PORTS=($(find_node_ports "alsa_output.pci-0000_00_1b.0.analog-stereo"))
+PS4_PORTS=($(find_node_ports "alsa_input\.pci-([[:alnum:][:punct:]]+)analog-stereo"))
+PC_PORTS=($(find_node_ports "alsa_output\.pci-([[:alnum:][:punct:]]+)analog-stereo"))
 
 function link() {
   for i in $(seq ${#PS4_PORTS[@]}); do
