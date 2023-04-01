@@ -1,13 +1,15 @@
 [global]
-    # monitor = 0
+    monitor = 0
     width = 300
     height = 300
-    # origin = top-right
+    origin = top-right
     offset = 10x35
     notification_limit = 0
     frame_width = 2
     gap_size = 10
     font = Hack Nerd Font 10
+    word_wrap = false
+    ellipsize = end
     min_icon_size = 16
     max_icon_size = 32
     foreground = "#dddddd"
