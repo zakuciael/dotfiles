@@ -226,7 +226,7 @@ caches/
 .config/Code/
 .config/HTTPie/
 .config/TabNine/
-
+.config/rncbc.org/
 .config/configstore/
 .config/fontforge/
 .config/gedit/
@@ -238,8 +238,6 @@ caches/
 .config/nautilus/
 .config/QtProject.conf
 .config/mimeapps.list
-
-
 
 # 1pass plugin settings
 .op/
