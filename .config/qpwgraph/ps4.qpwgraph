@@ -1,0 +1,14 @@
+<!DOCTYPE patchbay>
+<patchbay name="ps4" version="0.4.1">
+ <items>
+  <item node-type="pipewire" port-type="pipewire-audio">
+   <output node="System" port="System:capture_FL"/>
+   <input node="System" port="System:playback_FL"/>
+  </item>
+  <item node-type="pipewire" port-type="pipewire-audio">
+   <output node="System" port="System:capture_FR"/>
+   <input node="System" port="System:playback_FR"/>
+  </item>
+ </items>
+</patchbay>
+
