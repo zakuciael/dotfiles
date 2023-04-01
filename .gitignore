@@ -205,6 +205,8 @@ caches/
 .config/Code - OSS/
 .config/Bitwarden/
 .config/google-chrome
+.config/google-chrome-beta
+.config/google-chrome-unstable
 .config/1Password
 .config/GitHub Desktop/
 .config/BraveSoftware/
@@ -224,6 +226,20 @@ caches/
 .config/Code/
 .config/HTTPie/
 .config/TabNine/
+
+.config/configstore/
+.config/fontforge/
+.config/gedit/
+.config/icon-explorer/
+.config/jgit/
+.config/lxqt/
+.config/vlc/
+.config/noisetorch/
+.config/nautilus/
+.config/QtProject.conf
+.config/mimeapps.list
+
+
 
 # 1pass plugin settings
 .op/
