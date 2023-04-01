@@ -36,11 +36,11 @@ super + l
 
 # Toggle PS4 audio passthrough on and off
 super + KP_Multiply
-  ~/.scripts/ps4_audio_passthrough
+  ~/.scripts/ps4_utils audio
 
 # Toggle PS4 monitor on and off
 super + KP_Divide
-  ~/.scripts/ps4_monitor_switch
+  ~/.scripts/ps4_utils display
 
 #
 # Scratchpad

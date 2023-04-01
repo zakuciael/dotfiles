@@ -1,0 +1,323 @@
+#!/bin/env bash
+
+###################
+# SCRIPT SETTINGS #
+###################
+
+# Grep regex used to discover audio ports
+PS4_AUDIO_QUERY="alsa_input\.pci-([[:alnum:][:punct:]]+)analog-stereo"
+PC_AUDIO_QUERY="alsa_output\.pci-([[:alnum:][:punct:]]+)analog-stereo"
+
+# Display names used to move bspwm desktops
+PS4_DISPLAY_NAME="HDMI-1"
+PC_DISPLAY_NAME="DP-1"
+
+# Autorandr profiles used to enable/disable output to the PS4 display
+DISPLAY_SWITCH_ENABLED_PROFILE="ps4"
+DISPLAY_SWITCH_DISABLED_PROFILE="default"
+
+# Controls how many bspwm's desktops is assigned on each display
+DESKTOPS_PER_MONITOR=3
+
+LOCK_FILE="/var/lock/scripts/ps4_utils.lock"
+
+######################
+# NOTIFICATION ICONS #
+######################
+
+# Icon names used by the audio passthrough script
+AUDIO_PASSTHROUGH_ENABLED_ICON="audio-volume-high-symbolic"
+AUDIO_PASSTHROUGH_DISABLED_ICON="audio-volume-muted-symbolic"
+
+# Icon names used by the display switch script
+DISPLAY_SWITCH_ENABLED_ICON="video-display-symbolic"
+DISPLAY_SWITCH_DISABLED_ICON="video-display-symbolic"
+
+#####################
+# INTERNAL SETTINGS #
+#    DO NOT EDIT    #
+#####################
+
+# Controled via "-v" or "--verbose" flags
+VERBOSE=false
+
+##############
+# UTIL FUNCS #
+##############
+
+function notify() {
+  local ICON=$1
+  local SLEEP=$2
+  local MSG=${@:3}
+
+  log debug "Sending notification"
+  if [ $SLEEP -gt 0 ]; then
+    sleep $SLEEP
+  fi
+
+  dunstify -a "PS4 Utils" -u low -i $ICON -h string:x-dunst-stack-tag:ps4_utils "PS4 Utils" "$MSG"
+}
+
+function print_help() {
+  echo "Usage: ps4_utils [..OPTIONS] CMD [..ARGS]"
+  echo ""
+  echo "OPTIONS:"
+  echo " -v, --verbose    | Enable verbose logging"
+  echo ""
+  echo "COMMANDS:"
+  echo " audio            | Toggles PS4 audio passthrough on and off"
+  echo " display          | Toggles PS4 monitor on and off"
+}
+
+function log() {
+  local LEVEL=$1
+  local MSG=${@:2}
+
+  case "$LEVEL" in
+    info | INFO)
+      local LEVEL_STR="\e[34mINFO\e[0m"
+    ;;
+    debug | DEBUG)
+      local LEVEL_STR="\e[33mDEBUG\e[0m"
+    ;;
+    warn | WARN)
+      local LEVEL_STR="\e[35mWARN\e[0m"
+    ;;
+    error | ERROR)
+      local LEVEL_STR="\e[31mERROR\e[0m"
+    ;;
+    *)
+      local LEVEL_STR="\e[34mINFO\e[0m"
+    ;;
+  esac
+
+  if [ $VERBOSE = false ] && [ $LEVEL = "debug" ] || [ $LEVEL = "DEBUG" ]; then
+    return
+  fi
+
+  echo -e "\e[1m[$LEVEL_STR\e[1m]\e[0m $MSG"
+}
+
+function print_multiline() {
+  local -n ARR=$1
+
+  echo "\n  $(echo "${ARR[@]}" | sed 's/ /\n  /g')"
+}
+
+function find_audio_ports() {
+  local QUERY=$1
+
+  pw-link -io | grep -P "$QUERY" | grep -Ev "monitor_\w+"
+}
+
+function acquire_lock() {
+  log debug "Acquiring lock $LOCK_FILE"
+
+  if ! [[ -w "$(dirname "$LOCK_FILE")" ]]; then
+    log error "Unable to acquire lock, insufficient permissions"
+    exit 1
+  fi
+
+  lockfile -r 0 -l 3600 "$LOCK_FILE" &>/dev/null || print_instance_error
+  trap remove_lock EXIT
+}
+
+function remove_lock() {
+  log debug "Releasing lock $LOCK_FILE"
+  rm -rf "$LOCK_FILE"
+}
+
+function print_instance_error() {
+  log error "There is another instance running, exiting..."
+  exit 1
+}
+
+function load_profile() {
+  local PROFILE=$1
+
+  log debug "Switching autorandr profile to \"$PROFILE\""
+  autorandr -l $PROFILE
+}
+
+function remove_temp_desktops() {
+  log debug "Removing all temporary desktops"
+  while [ : ]; do
+    bspc desktop Desktop --remove &>/dev/null || break
+  done
+}
+
+function move_desktops() {
+  local FROM_DISPLAY=$1
+  local TO_DISPLAY=$2
+  local LIMIT=$3
+
+  if [ -z "$LIMIT" ]; then
+    log debug "Moving all desktops from \"$FROM_DISPLAY\" to \"$TO_DISPLAY\""
+    for DESKTOP in $(bspc query -D -m $FROM_DISPLAY); do
+      bspc desktop $DESKTOP --to-monitor $TO_DISPLAY
+    done
+  else
+    log debug "Moving $LIMIT desktops from \"$FROM_DISPLAY\" to \"$TO_DISPLAY\""
+    for DESKTOP in $(bspc query -D -m $FROM_DISPLAY | sed "$LIMIT"q); do
+      bspc desktop $DESKTOP --to-monitor $TO_DISPLAY
+    done
+  fi
+}
+
+function create_temp_desktop() {
+  local DISPLAY_NAME=$1
+
+  log debug "Creating temporary desktop on \"$DISPLAY_NAME\""
+  bspc monitor $DISPLAY_NAME -a Desktop
+}
+
+function restart_bspwm() {
+  log debug "Restarting bspwm"
+  bspc wm -r
+}
+
+#################
+# SETUP OPTIONS #
+#################
+
+OPTS=$(getopt -n ps4_utils -o vh --long verbose,help -- "$@")
+if [[ $? -ne 0 ]]; then
+  exit 1
+fi
+
+eval set -- "$OPTS"
+
+while [ : ]; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true
+      shift
+      ;;
+    -h | --help)
+      print_help
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      print_help
+      exit 1
+      ;;
+    ?)
+      print_help
+      exit 1
+      ;;
+  esac
+done
+
+################
+# RUN COMMANDS #
+################
+
+case "$1" in
+  audio)
+    # Setup semaphore lock
+    acquire_lock
+
+    PS4_AUDIO_PORTS=($(find_audio_ports $PS4_AUDIO_QUERY))
+    PC_AUDIO_PORTS=($(find_audio_ports $PC_AUDIO_QUERY))
+
+    log debug "Discovered PS4 audio ports:$(print_multiline PS4_AUDIO_PORTS)"
+    log debug "Discovered PC audio ports:$(print_multiline PC_AUDIO_PORTS)"
+  
+    if pw-link -l | grep -q "${PS4_AUDIO_PORTS[0]}"; then
+      # Disable audio passthrough
+      log info "Disconnecting PS4 audio from the PC audio..."
+
+      for i in $(seq ${#PS4_AUDIO_PORTS[@]}); do
+        PS4_AUDIO_PORT=${PS4_AUDIO_PORTS[$i - 1]}
+        PC_AUDIO_PORT=${PC_AUDIO_PORTS[$i - 1]}
+
+        log debug "Disconnecting \"$PS4_AUDIO_PORT\" from \"$PC_AUDIO_PORT\""
+        pw-link -d $PS4_AUDIO_PORT $PC_AUDIO_PORT
+      done
+
+      log info "Done. Audio disconnected."
+      notify $AUDIO_PASSTHROUGH_DISABLED_ICON 0 "Disabled audio passthrough"
+    else
+      # Enable audio passthrough
+      log info "Connecting PS4 audio to the PC audio..."
+
+      for i in $(seq ${#PS4_AUDIO_PORTS[@]}); do
+        PS4_AUDIO_PORT=${PS4_AUDIO_PORTS[$i - 1]}
+        PC_AUDIO_PORT=${PC_AUDIO_PORTS[$i - 1]}
+
+        log debug "Connecting \"$PS4_AUDIO_PORT\" to \"$PC_AUDIO_PORT\""
+        pw-link $PS4_AUDIO_PORT $PC_AUDIO_PORT
+      done
+
+      log info "Done. Audio connected."
+      notify $AUDIO_PASSTHROUGH_ENABLED_ICON 0 "Enabled audio passthrough"
+    fi
+    ;;
+  display)
+    # Setup semaphore lock
+    acquire_lock
+
+    if xrandr --listactivemonitors | grep -q "$PS4_DISPLAY_NAME"; then
+      # Switch display output to PS4
+      log info "Switching display output to PS4..."
+
+      # Load autorandr profile
+      load_profile $DISPLAY_SWITCH_ENABLED_PROFILE
+      
+      # Create a temp desktop since bspwm require atleast one desktop present
+      log info "Done. Moving desktops to the second display..."
+      create_temp_desktop $PC_DISPLAY_NAME
+
+      # Move every desktop from PC display to PS4 display to reoreder desktops
+      move_desktops $PC_DISPLAY_NAME $PS4_DISPLAY_NAME
+
+      # Create a temp desktop since bspwm require atleast one desktop present
+      create_temp_desktop $PS4_DISPLAY_NAME
+
+      # Now move everything back to the PS4 display
+      move_desktops $PS4_DISPLAY_NAME $PC_DISPLAY_NAME
+
+      # Remove all temporary desktops
+      remove_temp_desktops
+
+      # Restart bspwm
+      restart_bspwm
+
+      log info "Done. Display output switched."
+      notify $DISPLAY_SWITCH_ENABLED_ICON 2 "Switched display output to PS4"
+    else
+      # Switch display output to PC
+      log info "Switching display output to PC..."
+
+      # Load autorandr profile
+      load_profile $DISPLAY_SWITCH_DISABLED_PROFILE
+
+      # Move specified amount of desktops from PC display to PS4 display
+      log info "Done. Moving desktops to their original displays..."
+      move_desktops $PC_DISPLAY_NAME $PS4_DISPLAY_NAME $DESKTOPS_PER_MONITOR
+
+      # Remove all temporary desktops
+      remove_temp_desktops
+
+      # Restarting bspwm
+      restart_bspwm
+
+      log info "Done. Display output switched"
+      notify $DISPLAY_SWITCH_DISABLED_ICON 2 "Switched display output to PC"
+    fi
+    ;;
+  *)
+    if [ -z "$1" ]; then
+      echo "Error: No command specified"
+    else
+      echo "Error: Invalid command: $1"
+    fi
+
+    print_help
+    exit 1
+    ;;
+esac

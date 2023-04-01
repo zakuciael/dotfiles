@@ -1,10 +1,17 @@
 #! /bin/sh
 
 # BSPWM monitor layout
-bspc wm -O HDMI-1 DP-1 DVI-D-2
-bspc monitor HDMI-1 -d 1 2 3
-bspc monitor DP-1 -d 4 5 6
-bspc monitor DVI-D-2 -d 7 8 9
+
+if xrandr --listactivemonitors | grep -q "HDMI-1"; then
+  bspc wm -O HDMI-1 DP-1 DVI-D-2
+  bspc monitor HDMI-1 -d 1 2 3
+  bspc monitor DP-1 -d 4 5 6
+  bspc monitor DVI-D-2 -d 7 8 9
+else
+  bspc wm -O DP-1 DVI-D-2 HDMI-1
+  bspc monitor DP-1 -d 1 2 3 4 5 6
+  bspc monitor DVI-D-2 -d 7 8 9
+fi
 
 # BSPWM config
 bspc config border_width          3
