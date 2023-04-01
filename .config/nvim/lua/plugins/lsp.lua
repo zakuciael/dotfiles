@@ -1,7 +1,13 @@
 local load_mappings = require("core.utils").load_mappings
 local lazy_load = require("core.lazy_load")
 
-local mason_ensure_installed = { "lua-language-server" }
+local mason_ensure_installed = {
+  "lua-language-server",
+  "eslint-lsp",
+  "prettier",
+  "typescript-language-server",
+  "bash-language-server"
+}
 
 -- Setup lsp capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
