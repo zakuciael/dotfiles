@@ -19,7 +19,7 @@ DISPLAY_SWITCH_DISABLED_PROFILE="default"
 # Controls how many bspwm's desktops is assigned on each display
 DESKTOPS_PER_MONITOR=3
 
-LOCK_FILE="/var/lock/ps4_utils.lock"
+LOCK_FILE="/var/lock/scripts/ps4_utils.lock"
 
 ######################
 # NOTIFICATION ICONS #
