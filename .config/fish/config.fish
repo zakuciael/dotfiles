@@ -19,6 +19,7 @@ alias ls="exa -lag --header --icons --git"
 alias cat="bat"
 alias vim="nvim"
 alias tmux="tmux -2"
+alias locate="lolcate"
 
 # Load rtx (asdf rust clone)
 rtx activate fish | source
