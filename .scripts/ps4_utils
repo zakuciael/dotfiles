@@ -9,8 +9,8 @@ PS4_AUDIO_QUERY="alsa_input\.pci-([[:alnum:][:punct:]]+)analog-stereo"
 PC_AUDIO_QUERY="alsa_output\.pci-([[:alnum:][:punct:]]+)analog-stereo"
 
 # Display names used to move bspwm desktops
-PS4_DISPLAY_NAME="HDMI-1"
-PC_DISPLAY_NAME="DP-1"
+PS4_DISPLAY_NAME="DP-1"
+PC_DISPLAY_NAME="HDMI-1"
 
 # Autorandr profiles used to enable/disable output to the PS4 display
 DISPLAY_SWITCH_ENABLED_PROFILE="ps4"
