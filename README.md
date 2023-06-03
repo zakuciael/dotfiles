@@ -15,16 +15,16 @@
 
 <hr>
 
-[wayland/hyperland](https://github.com/zakuciael/dotfiles/tree/wayland/hyperland)
+[wayland/hyprland](https://github.com/zakuciael/dotfiles/tree/wayland/hyprland)
 <div align="center">
 
 ```ocaml
-❄️ wayland + sddm + hyperland ❄️
+❄️ wayland + sddm + hyprland ❄️
 ```
 
 > TODO: Add image when satisfied whith system look
 
-[![wayland/hyperland](https://github.com/flick0/dotfiles/blob/aurora/assets/fetch.png?raw=true)](https://github.com/zakuciael/dotfiles/tree/xorg/bspwm)
+[![wayland/hyprland](https://github.com/flick0/dotfiles/blob/aurora/assets/fetch.png?raw=true)]([https://github.com/zakuciael/dotfiles/tree/xorg/bspwm](https://github.com/zakuciael/dotfiles/tree/wayland/hyprland))
 
 </div>
 
