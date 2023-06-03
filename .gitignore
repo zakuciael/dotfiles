@@ -238,6 +238,8 @@ caches/
 .config/nautilus/
 .config/QtProject.conf
 .config/mimeapps.list
+.config/obsidian/
+.config/Stashpad/
 
 # 1pass plugin settings
 .op/
