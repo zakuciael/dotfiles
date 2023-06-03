@@ -1,11 +1,13 @@
-#!/bin/sh
+#!/bin/env sh
 
 set -eu
 
 # Directory to look for system configs
 SYSTEM_CONFIGS_DIR="$HOME/.config/system/"
 
-echo "Setting up system files..."
+echo "==========================="
+echo "  Setting up system files"
+echo "==========================="
 
 find -L "$SYSTEM_CONFIGS_DIR" -type f | sort | while IFS= read -r SRC_PATH; do
   DEST_PATH="/$(realpath --relative-to="$SYSTEM_CONFIGS_DIR" "$SRC_PATH")"
