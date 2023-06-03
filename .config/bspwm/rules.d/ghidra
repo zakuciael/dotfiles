@@ -7,7 +7,7 @@ WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
 
 output() {
   local ARGS=$@
-  echo "desktop=1 $ARGS"
+  echo "desktop='^1' $ARGS"
 }
 
 floating() {
