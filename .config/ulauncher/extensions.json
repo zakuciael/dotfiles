@@ -41,13 +41,6 @@
         "last_commit": "edf13b356543bb2827ed3c78981c007e5be40e77",
         "last_commit_time": "2022-12-26T12:08:25"
     },
-    "com.github.brpaz.ulauncher-github": {
-        "id": "com.github.brpaz.ulauncher-github",
-        "url": "https://github.com/brpaz/ulauncher-github",
-        "updated_at": "2023-01-08T17:20:48.610626",
-        "last_commit": "c2a4d8f651c326c13290eb9e28c076f14aaac704",
-        "last_commit_time": "2022-10-15T10:36:52"
-    },
     "com.github.fisadev.ulauncher-better-file-browser": {
         "id": "com.github.fisadev.ulauncher-better-file-browser",
         "url": "https://github.com/fisadev/ulauncher-better-file-browser",
