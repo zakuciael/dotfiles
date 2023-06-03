@@ -26,6 +26,8 @@ bspc config external_rules_command "/home/zakku/.config/bspwm/rules"
 bspc rule -a Ulauncher state=floating border=off focus=on
 bspc rule -a sxhkd_keys state=floating
 bspc rule -a discord desktop='^7'
+bspc rule -a thunderbird state=floating
+bspc rule -a calendar_dropdown state=floating border=off
 bspc rule -a Shadow desktop='^1' state=floating
 
 # Fix cursor
@@ -43,6 +45,7 @@ fi
 export SXHKD_VAR_PANEL_OFFSET=25
 export SXHKD_VAR_BORDER_OFFSET=-6
 export SXHKD_VAR_WM=bspwm
+export _JAVA_AWT_WM_NONREPARENTING=1
 SXHKD_SHELL=/usr/bin/sh sxhkd &
 
 # Start X compositor
@@ -69,5 +72,5 @@ fi
 systemctl --user start xdg-desktop-autostart.target
 
 # Fix Java applications
-wmname LG3D
-export _JAVA_AWT_WM_NONREPARENTING=1
+# wmname LG3D
+# export _JAVA_AWT_WM_NONREPARENTING=1

@@ -54,6 +54,10 @@ super + ctrl + Return
 super + ctrl + s
   tdrop --wm $SXHKD_VAR_WM -ma -w 80% -h 80% -y 10% -x 10% spotify
 
+# Thunderbird
+super + ctrl + m
+  tdrop --wm $SXHKD_VAR_WM -ma -n thunderbird --class thunderbird -w 90% -h 90% -x 5% -y 5% thunderbird-beta -P "default" --class thunderbird
+
 #
 # BSPWM
 #
