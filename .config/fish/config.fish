@@ -1,25 +1,30 @@
-# Configure "z"
-set -U Z_DATA "$HOME/.z"
-
 # Add custom paths to $PATH env
 fish_add_path "$HOME/.local/bin"
 
-# Disable greeting
-set fish_greeting
-
-# Bind Ctrl+S to append sudo
-bind \cs '__ethp_commandline_toggle_sudo'
+# Editor settings
+set -gx VISUAL "nvim"
+set -gx EDITOR "$VISUAL"
+set -gx LESS "-R"
 
 # Envs
-set -U EDITOR "nvim"
-set -U XDG_CONFIG_HOME "$HOME/.config/"
+set -gx XDG_CONFIG_HOME "$HOME/.config/"
+set -gx Z_DATA "$HOME/.z"
+
+# Setup PNPM
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+fish_add_path "$PNPM_HOME"
 
 # Aliases
 alias ls="exa -lag --header --icons --git"
 alias cat="bat"
+alias df="duf"
 alias vim="nvim"
 alias tmux="tmux -2"
+alias cloc="tokei"
 alias locate="lolcate"
+
+# Setup thefuck aliases
+thefuck --alias | source
 
 # Load rtx (asdf rust clone)
 rtx activate fish | source
@@ -34,8 +39,6 @@ mcfly init fish | source
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
 
 # Setup PNPM
-set -gx PNPM_HOME "/home/zakku/.local/share/pnpm"
-set -gx PATH "$PNPM_HOME" $PATH
 
 # Load 1password plugins
 source /home/zakku/.config/op/plugins.sh
