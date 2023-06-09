@@ -1,0 +1,2 @@
+/opt/photoshop
+/home/zakku/.cache/photoshopCCV19
