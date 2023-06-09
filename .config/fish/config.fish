@@ -1,5 +1,6 @@
 # Add custom paths to $PATH env
 fish_add_path "$HOME/.local/bin"
+fish_add_path "$HOME/.local/share/JetBrains/Toolbox/scripts"
 
 # Editor settings
 set -gx VISUAL "nvim"
