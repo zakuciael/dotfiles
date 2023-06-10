@@ -1,0 +1,127 @@
+* {
+    font-family: FiraCode, Noto Sans, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+#clock,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#mpd {
+    padding: 0 10px;
+    border-radius: 15px;
+    background: #11111b;
+    color: #b4befe;
+    box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#clock,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#mpd button,
+button.active label {
+    color: rgba(255, 255, 255, 1);
+    font-weight: bolder;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.377);
+}
+
+#workspaces {
+    background-color: transparent;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 25px;
+}
+
+#workspaces button {
+    box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
+    background-color: rgba(23, 23, 37, 1);
+    border-radius: 15px;
+    margin-right: 10px;
+    padding: 10px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    transition: all 0.5s cubic-bezier(.55, -0.68, .48, 1.68);
+}
+
+#workspaces button.active {
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 2px;
+    background: linear-gradient(90deg, rgba(0, 201, 255, 1) 0%, rgba(146, 254, 157, 1) 100%);
+    background-size: 300% 300%;
+    animation: gradient 10s ease infinite;
+}
+
+#clock {
+    margin-right: 25px;
+    font-size: 15px;
+    padding-top: 5px;
+    padding-right: 21px;
+    padding-left: 20px;
+
+    background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
+}
+
+#cpu {
+    background: linear-gradient(90deg, #0700b8 0%, #00ff88 100%);
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
+}
+
+#pulseaudio {
+    background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
+}
+
+#tray {
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
+}
+
+#tray>.passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray>.needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
