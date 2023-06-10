@@ -1,0 +1,175 @@
+#!/bin/env sh
+source ~/.config/yadm/bootstrap.tools
+
+declare -g -A PACKAGES=(
+	# Essentials
+	["yadm"]=false                                    # Yet Another Dotfiles Manager
+	["git"]=false                                     # Version control system
+	["wget"]=false                                    # Download files
+	["neovim"]=false                                  # Text editor
+	["fish"]=false                                    # Terminal shell
+	["man-db"]=false                                  # Man pages
+	["polkit"]=false                                  # System privileges
+	["polkit-kde-agent"]=false                        # Polkit auth agent
+	["bluez"]=false                                   # Daemons for the bluetooth protocol stack
+	["bluez-plugins"]=false                           # bluez plugins (PS3 Sixaxis controller)
+	["bluez-utils"]=false                             # Tools and commands to interact with the bluetooth protocol stack, such as bluetoothctl
+	["pacman-contrib"]=false                          # Scripts and utils for pacman, such as paccache, pacsearch, pactree, etc.
+	["make"]=false                                    # GNU make utility to maintain groups of programs
+	["ninja"]=false                                   # Small build system with a focus on speed
+	["patch"]=false                                   # A utility to apply patch files to original sources
+	["pkgfile"]=false                                 # Search pakages containing commands
+	["dunst"]=false                                   # Notification daemon
+	["fcron"]=false                                   # Feature-rich cron implementation
+	["xdg-user-dirs"]=false                           # Tool to manage "well known" user directories
+  ["waybar"]=false                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors.
+  ["hyprpaper"]=false                               # Blazing fast wallpaper utility for Hyprland
+  ["procmail"]=true                                 # Used to get "lockfile" command
+	["wev"]=true                                      # Tool for debugging wayland events, similar to xev 
+	["xwaylandvideobridge-cursor-mode-2-git"]=true    # XWayland Bridge for screen sharing 
+	["sddm-git"]=true                                 # Display manager
+  ["swww"]=true                                     # Efficient animated wallpapers
+
+	# Fonts
+	["adobe-source-code-pro-fonts"]=false             # Adobe fonts
+	["adobe-source-han-sans-kr-fonts"]=false          # Korean fonts
+	["noto-fonts-emoji"]=false                        # Emoji support
+	["ttf-font-awesome"]=false                        # Font awesome
+	["cantarell-fonts"]=false                         # Cantrell fonts
+	["ttf-twemoji"]=true                              # Twitter emoji fonts
+
+	# User apps
+	["alacritty"]=false                               # Terminal emulator
+	["discord"]=false                                 # Discord
+	["docker"]=false                                  # Docker
+	["filezilla"]=false                               # FTP/SFTP client
+	["wireshark-qt"]=false                            # Network traffic and protocol analyzer/sniffer 
+	["steam"]=false                                   # Game library
+	["vlc"]=false                                     # Multi-platform video player
+	["obsidian"]=false                                # Notes editor
+	["sqlitebrowser"]=false                           # Database browser for SQLite
+  ["1password-beta"]=true                           # Password manager
+	["1password-cli"]=true                            # Password manager CLI
+	["imhex"]=true                                    # Hex editor for reverse engineers and programmers
+	["figma-linux-bin"]=true                          # The collaborative interface design tool
+	["ghidra-desktop"]=true                           # Software reverse engineering framework
+	["google-chrome"]=true                            # Web browser made by Google
+	["jetbrains-toolbox"]=true                        # Manage all your JetBrains Projects and Tools
+	["mongodb-compass"]=true                          # Database browser for MongoDB
+	["noisetorch"]=true                               # Real-time microphone noise suppression on Linux 
+	["spotify"]=true                                  # Music player
+	["ulauncher"]=true                                # App launcher
+	["visual-studio-code-bin"]=true                   # Code editor
+
+	# System apps
+	["grub-customizer"]=false                         # A graphical grub2 settings manager
+	["lxappearance"]=false                            # GTK+ theme switcher
+	["blueman"]=false                                 # Bluetooth Manager
+	["gnome-calculator"]=false                        # Calculator app
+	["nautilus"]=false                                # File manager
+	["qpwgraph"]=false                                # PipeWire Graph GUI
+	["nsxiv"]=false                                   # Image viewer
+  ["appimagelauncher"]=true                         # Helper application for running and integrating AppImages 
+	["icon-explorer"]=true                            # Utility to examine app icons for installed icon themes 
+
+	# CLI Power Basics
+	["aria2"]=false                                   # Resuming download util (better wget)
+	["bat"]=false                                     # Output highlighting (better cat)
+	["broot"]=false                                   # Interactive directory navigation
+	["duf"]=false                                     # Get info on mounted disks (better df)
+	["exa"]=false                                     # Listing files with info (better ls)
+	["httpie"]=false                                  # CLI HTTP/HTTPS client for APIs
+	["hyperfine"]=false                               # Benchmarking for arbitrary commands
+	["just"]=false                                    # Powerful command runner (better make)
+	["jq"]=false                                      # JSON parser, output and query files
+	["diff-so-fancy"]=false                           # Readable file compares (better diff) 
+	["fq"]=false                                      # Tool for inspecting binary data
+	["github-cli"]=false                              # GitHub CLI
+	["ripgrep"]=false                                 # Searching within files (better grep)
+	["lf"]=false                                      # Terminal file manager
+	["inetutils"]=false                               # Network tools, such as ftp, telnet, etc.
+	["mcfly"]=false                                   # Shell history search
+	["zoxide"]=false                                  # Auto-learning navigation (better cd)
+	["starship"]=false                                # Shell prompt
+	["tealdeer"]=false                                # Reader for command docs (better man)
+	["thefuck"]=false                                 # Auto-correct miss-typed commands
+	["tokei"]=false                                   # Count lines of code (better cloc)
+	["tree"]=false                                    # Directory listings as tree structure
+	["procs"]=false                                   # Advanced process viewer (better ps)
+	["playerctl"]=false                               # MPRIS media player controller
+	["sd"]=false                                      # RegEx find and replace (better sed)
+	["alsa-utils"]=false                              # Audio mixer for Alsa backend
+	["pulsemixer"]=false                              # Audio mixer for PulseAudio backend
+  ["yt-dlp"]=false                                  # Tool to download videos from YouTube and other video sites
+  ["rtx"]=true                                      # ASDF but faster and easier
+	["sysz"]=true                                     # FZF for systemctl
+	["tdrop-git"]=true                                # WM-independent dropdown and scratchpad creator 
+	["transcrypt"]=true                               # Transparent encryption for files in git repo
+
+	# CLI Fun
+	["neofetch"]=false                                # Show off distro and system info
+  ["pfetch-rs"]=true                                # Show off distro and system info but faster 
+	["pipes.sh"]=true                                 # Animated pipes terminal screensaver 
+	["cava"]=true                                     # Audio visualizer 
+
+	# Monitoring, managment, and stats
+	["btop"]=false                                    # Live system resource monitoring
+	["corectrl"]=false                                # Profile based system control utility
+	["ctop"]=false                                    # Container metrics and monitoring
+	["radeontop"]=false                               # GPU utilization for AMD graphic cards
+	["nvtop"]=false                                   # GPUs process monitoring for AMD, Intel and NVIDIA
+	["gping"]=false                                   # Interactive ping tool, with graph
+)
+
+# Check pacman actually installed
+debug "Checking for pacman executable"
+if ! is_installed pacman; then
+  error "Unable to find pacman installed on your system"
+  exit 1
+fi
+
+if prompt_boolean "Would you like to update package database?"; then
+  execute false "Updating package database" sudo pacman -Syy --noconfirm
+fi
+
+if prompt_boolean "Would you like to upgrade currently installed packages?"; then
+  execute false "Upgrading installed packages" sudo pacman -Syu --noconfirm
+fi
+
+if prompt_boolean "Would you like to clear unused package caches?"; then
+  execute false "Freeing up disk space" sudo pacman -Sc --noconfirm; paccache -r
+fi
+
+if prompt_boolean "Would you like to install AUR helper (yay)?"; then
+  status "Installing yay..." true
+
+  if query_package yay; then
+    sleep 0.2
+    success "Installing yay, already installed"
+  else
+    rm -rf /opt/yay/
+    git clone https://aur.archlinux.org/yay.git /opt/yay/
+    cd /opt/yay/
+
+    execute true "Installing yay" makepkg -si --noconfirm
+  fi
+fi
+
+if prompt_boolean "Would you like to install system packages?"; then
+  info "Installing system packages..."
+
+  for PACKAGE in ${!PACKAGES[@]}; do
+    status "Installing ${PACKAGE}..." true
+
+    if query_package ${PACKAGE}; then
+      sleep 0.1
+      success "Installing ${PACKAGE}, already installed"
+    else
+      if [[ ${PACKAGES[${PACKAGE}]} == true ]]; then
+        silent_execute true "Installing ${PACKAGE}" yay -S --noconfirm --needed --removemake --nodiffmenu --nocleanmenu --mflags \"--noconfirm\" ${PACKAGE}
+      else
+        silent_execute true "Installing ${PACKAGE}" sudo pacman -S --needed --noconfirm ${PACKAGE}
+      fi
+    fi
+  done
+fi

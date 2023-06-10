@@ -1,0 +1,19 @@
+#!/bin/env sh
+source ~/.config/yadm/bootstrap.tools
+
+# Directory to look for system configs
+SYSTEM_CONFIGS_DIR="$HOME/.config/system/"
+
+if [[ ! -d "$SYSTEM_CONFIGS_DIR" ]]; then
+    error "bootstrap directory '${BOOTSTRAP_D}' not found"
+    warn "system config directory '${SYSTEM_CONFIGS_DIR}' not found, skipping..."
+    exit 0
+fi
+
+if prompt_boolean "Would you like to setup system-level configuration?"; then
+  info "Symlinking system configs..."
+  find -L "$SYSTEM_CONFIGS_DIR" -type f | sort | while IFS= read -r SRC_PATH; do
+    DEST_PATH="/$(realpath --relative-to="$SYSTEM_CONFIGS_DIR" "$SRC_PATH")"
+    silent_execute false "Symlinking $SRC_PATH -> $DEST_PATH" sudo ln -sf $SRC_PATH $DEST_PATH
+  done
+fi
