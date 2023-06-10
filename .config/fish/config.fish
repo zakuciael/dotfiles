@@ -1,6 +1,7 @@
 # Add custom paths to $PATH env
 fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/.local/share/JetBrains/Toolbox/scripts"
+fish_add_path "$HOME/.scripts/git"
 
 # Editor settings
 set -gx VISUAL "nvim"
@@ -8,7 +9,7 @@ set -gx EDITOR "$VISUAL"
 set -gx LESS "-R"
 
 # Envs
-set -gx XDG_CONFIG_HOME "$HOME/.config/"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx Z_DATA "$HOME/.z"
 
 # Setup PNPM
