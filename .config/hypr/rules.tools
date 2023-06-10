@@ -1,0 +1,100 @@
+#!/bin/env sh
+
+get_window() {
+  local WINDOW_ADDR=$1
+
+  echo $(hyprctl clients -j | jq -r ".[] | select(.address == \"0x${WINDOW_ADDR}\") | .")
+}
+
+deserialize() {
+  local RAW_ARGS=(${1//>>/ })
+  local RAW_DATA=(${RAW_ARGS[1]//,/ })
+  local EVENT=${RAW_ARGS[0]}
+
+  declare -Ag DATA
+
+  case "$EVENT" in
+    "openwindow")
+      DATA[address]=${RAW_DATA[0]}
+      DATA[workspace]=${RAW_DATA[1]}
+      DATA[class]=${RAW_DATA[2]}
+      DATA[title]=${RAW_DATA[3]}
+      ;;
+    "closewindow")
+      DATA[address]=${RAW_DATA[0]}
+      ;;
+    "movewindow")
+      DATA[address]=${RAW_DATA[0]}
+      DATA[workspace]=${RAW_DATA[1]}
+      ;;
+    "workspace")
+      DATA[workspace]=${RAW_DATA[0]}
+      ;;
+    "focusedmon")
+      DATA[monitor]=${RAW_DATA[0]}
+      DATA[workspace]=${RAW_DATA[1]}
+      ;;
+    "activewindow")
+      # echo "$1" >&2
+      DATA[class]=${RAW_DATA[0]}
+      DATA[title]=${RAW_DATA[@]}
+      ;;
+    "activewindowv2")
+      DATA[address]=${RAW_DATA[0]}
+      ;;
+    "fullscreen")
+      DATA[fullscreen]=${RAW_DATA[0]}
+      ;;
+    "monitorremoved" | "monitoradded")
+      DATA[monitor]=${RAW_DATA[0]}
+      ;;
+    "createworkspace" | "destroyworkspace")
+      DATA[workspace]=${RAW_DATA[0]}
+      ;;
+    "moveworkspace")
+      DATA[workspace]=${RAW_DATA[0]}
+      DATA[monitor]=${RAW_DATA[1]}
+      ;;
+    "activelayout")
+      DATA[keybord]=${RAW_DATA[0]}
+      DATA[layout]=${RAW_DATA[1]}
+      ;;
+    "openlayer" | "closelayer")
+      DATA[namespace]=${RAW_DATA[0]}
+      ;;
+    "submap")
+      DATA[submap]=${RAW_DATA[0]}
+      ;;
+    "changefloatingmode")
+      DATA[address]=${RAW_DATA[0]}
+      DATA[floating]=${RAW_DATA[1]}
+      ;;
+    "urgent")
+      DATA[address]=${RAW_DATA[0]}
+      ;;
+    "minimize")
+      DATA[address]=${RAW_DATA[0]}
+      DATA[minimized]=${RAW_DATA[1]}
+      ;;
+    "screencast")
+      DATA[state]=${RAW_DATA[0]}
+      DATA[owner]=${RAW_DATA[1]}
+      ;;
+    "windowtitle")
+      DATA[address]=${RAW_DATA[0]}
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
+
+  # echo "Event: $EVENT | Data: $(declare -p DATA | cut -d= -f2-)" >&2
+
+  echo "declare EVENT=${EVENT}; $(declare -p DATA)"
+}
+
+listen() {
+  local FUNC=$1
+
+  socat - "UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do $FUNC "$(deserialize "$line")"; done
+}
