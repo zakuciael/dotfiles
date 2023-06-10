@@ -1,0 +1,81 @@
+#!/bin/env sh
+
+source ~/.scripts/tools/logger.sh
+
+# When user is prompted for input, skip after x seconds
+PROMPT_TIMEOUT=15
+
+# If set to auto-yes - then don't wait for user reply
+if [[ $* == *"--auto-yes"* ]]; then
+  PROMPT_TIMEOUT=0
+  REPLY='Y'
+fi
+
+prompt_boolean() {
+  local PROMPT=$@
+
+  read -t $PROMPT_TIMEOUT -N 1 -r -s -p "$(info "${PROMPT} (${LIGHT_GREEN}y${RESET}/${LIGHT_RED}N${RESET}): ")" < /proc/${PPID}/fd/0
+
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo -e "${LIGHT_GREEN}y${RESET}"
+    return 0
+  else
+    echo -e "${LIGHT_RED}n${RESET}"
+    return 1
+  fi
+}
+
+execute() {
+  local SKIP_STATUS=$1
+  local MSG="$2"
+  local CMD=${@:3}
+
+  if [[ ${SKIP_STATUS} != true ]]; then
+    status "${MSG}"
+  fi
+
+  if ${CMD} ; then
+    success "${MSG}, done"
+  else
+    fail "${MSG}, failed"
+    exit 1
+  fi
+}
+
+silent_execute() {
+  local SKIP_STATUS=$1
+  local MSG="$2"
+  local CMD=${@:3}
+
+  if [[ ${SKIP_STATUS} != true ]]; then
+    status "${MSG}" true
+  fi
+
+  ${CMD} > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    success "${MSG}, done"
+  else
+    fail "${MSG}, failed"
+  fi
+
+}
+
+is_installed() {
+  local PACKAGE=$1
+
+  hash ${PACKAGE} 2> /dev/null
+}
+
+query_package() {
+  local PACKAGE="$1"
+
+  if is_installed ${PACKAGE}; then
+    return 0
+  elif [[ $(echo $(pacman -Qk $(echo ${PACKAGE} | tr 'A-Z' 'a-z') 2> /dev/null )) == *"total files"* ]]; then
+    return 0
+  elif hash flatpak 2> /dev/null && [[ ! -z $(echo $(flatpak list --columns=ref | grep ${PACKAGE})) ]]; then
+    return 0
+  else
+    return 1
+  fi
+}

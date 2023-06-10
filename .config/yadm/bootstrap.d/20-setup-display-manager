@@ -1,0 +1,15 @@
+#!/bin/env sh
+source ~/.config/yadm/bootstrap.tools
+
+get_display_manager() {
+  systemctl --property=Id show display-manager.service | sed 's/^Id=//g' | sed 's/\.service//g'
+}
+
+if prompt_boolean "Would you like to set sddm as your desktop manager?"; then
+  debug "Checking current display manager"
+  if [[ $(get_display_manager) != "sddm" ]]; then
+    silent_execute false "Disabling currently selected display manager" sudo systemctl disable display-manager
+  fi
+
+  silent_execute false "Setting sddm as the current display manager" sudo systemctl enable sddm
+fi
