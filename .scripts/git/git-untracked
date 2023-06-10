@@ -1,0 +1,3 @@
+#/bin/env sh
+
+git status --porcelain=v1 -zunormal | xargs -0n1 printf "%s\n" | grep -E '^\?\? \.' | cut -c4-
