@@ -1,35 +1,14 @@
-## compiled dynamic langauages
 *.pyc
 *.zwc
-
 *.log
-
 *.idea
 *.iml
 *.code-workspacE
-
-# You may want to customise this file depending on your Operating System
-# and the editor that you use.
-#
-# We recommend that you use a Global Gitignore for files that are not related
-# to the project. (https://help.github.com/articles/ignoring-files/#create-a-global-gitignore)
-
-# OS
-#
-# Ref: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
-# General
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Icon must end with two \r
 Icon
-
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -37,59 +16,29 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-
-# Ref: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
-# Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
-
-# Dump file
 *.stackdump
-
-# Folder config file
 [Dd]esktop.ini
-
-# Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Windows Installer files
 *.cab
 *.msi
 *.msix
 *.msm
 *.msp
-
-# Windows shortcuts
 *.lnk
-
-# Ref: https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
 *~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
-
-# KDE directory preferences
 .directory
-
-# Linux trash folder which might appear on any partition or disk
 .Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
-# Archives
-# https://github.com/github/gitignore/blob/master/Global/Archives.gitignore
-# It's better to unpack these files and commit the raw source because
-# git has its own built in compression methods.
 *.7z
 *.jar
 *.rar
@@ -105,12 +54,8 @@ $RECYCLE.BIN/
 *.cab
 *.xar
 *.zst
-
-# Packing-only formats
 *.iso
 *.tar
-
-# Package management formats
 *.dmg
 *.xpi
 *.gem
@@ -121,17 +66,12 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.txz
-
-# Editors
-#
-# Ref: https://github.com/github/gitignore/blob/master/Global
-# Ref: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
-# Ref: https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+.z
 .idea
-
+.vscode/extensions/*
+!.vscode/extensions/extensions.json
+.config/imhex/recent/
 *.swp
-
-# Homedir yadm optimization
 Videos/
 Pictures/
 Downloads/
@@ -182,10 +122,14 @@ caches/
 .asdf/
 .adobe-reader*/
 .themes/
-.vscode/extensions/
 .tabnine/
-
-## .config abusers
+.hyprland/
+.docker/
+.ghidra/
+.wakatime-internal.cfg
+.wakatime.bdb
+.wakatime/
+.config/yadm/tags
 .config/opera/
 .config/evolution/
 .config/discord/
@@ -240,10 +184,13 @@ caches/
 .config/mimeapps.list
 .config/obsidian/
 .config/Stashpad/
-
-# 1pass plugin settings
+.config/create-next-app-nodejs/
+.config/filezilla/
+.config/corectrl/
+.config/nextjs-nodejs/
+.config/sqlitebrowser/
+.config/turborepo/
+.config/dconf/
 .op/
 .config/op/
-
-# secrets, logins, etc.
 .tsh/
