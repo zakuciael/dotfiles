@@ -2,7 +2,12 @@
 missing_runtime_behavior = "autoinstall"
 legacy_version_file = true
 
+[plugins]
+rust = "https://github.com/code-lever/asdf-rust"
+lazydocker = "https://github.com/comdotlinux/asdf-lazydocker"
+
 [tools]
-deno = "latest"
-nodejs = "20"
-node = "20"
+rust = "stable"
+java = "20.0.1"
+lazydocker = "0.20.0"
+node = "20.4.0"
