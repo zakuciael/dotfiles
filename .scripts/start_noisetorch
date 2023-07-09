@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+get_mic_id() {
+  echo "$(noisetorch -l | grep -Po 'alsa_input\.usb-Samson_Technologies_Samson_GoMic-([[:alnum:][:punct:]]+)analog-stereo([[:alnum:][:punct:]]+)?' | head -1)"
+}
+
+noisetorch -i -s $(get_mic_id) -t 55 -log
