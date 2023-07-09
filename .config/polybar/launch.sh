@@ -8,7 +8,7 @@ while pgrep -u $USER -x polybar; do sleep 0.1; done
 
 # Launch bars
 
-if xrandr --listactivemonitors | grep -q "HDMI-1"; then
+if xrandr --listactivemonitors | grep -q "HDMI-A-0"; then
   polybar main &
 fi
 
