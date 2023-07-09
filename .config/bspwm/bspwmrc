@@ -30,6 +30,10 @@ bspc rule -a thunderbird state=floating
 bspc rule -a calendar_dropdown state=floating border=off
 bspc rule -a Shadow desktop='^1' state=floating
 
+# Change yadm class to "bspwm"
+yadm config local.class bspwm
+yadm alt
+
 # Fix cursor
 xsetroot -cursor_name left_ptr
 
