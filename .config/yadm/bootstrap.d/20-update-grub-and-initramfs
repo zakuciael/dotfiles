@@ -1,0 +1,9 @@
+#!/bin/env sh
+source ~/.config/yadm/bootstrap.tools
+
+if prompt_boolean "Would you like to update GRUB and Initramfs?"; then
+  silent_execute false "Updating GRUB configuration" sudo grub-mkconfig -o /boot/grub/grub.cfg
+  silent_execute false "Updating Initramfs images" sudo mkinitcpio -P
+else
+  warn "${LIGHT_YELLOW}WARNING:${RESET} Any changes to ${LIGHT_BLUE}\"/etc/default/grub\"${RESET} or ${LIGHT_BLUE}\"/etc/mkinitcpio.conf\"${RESET} will ${LIGHT_RED}break your system${RESET} the next time you boot"
+fi
