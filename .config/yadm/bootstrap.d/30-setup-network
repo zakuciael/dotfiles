@@ -1,0 +1,30 @@
+#!/bin/env sh
+source ~/.config/yadm/bootstrap.tools
+# set -x
+
+INTERFACE_NAME=enp7s0
+
+if prompt_boolean "Would you like to setup network configuration?"; then
+  if is_installed dhcpcd; then
+    silent_execute false "Disabling dhcpcd service" sudo systemctl stop dhcpcd && sudo systemctl disable dhcpcd
+  fi
+
+  silent_execute false "Enabling NetworkManager service" sudo systemctl enable --now NetworkManager
+
+  info "Creating network..."
+  silent_execute false "Creating bridge network \"br0\"" nmcli con add type bridge con-name br0 ifname br0 autoconnect yes
+  silent_execute false "Creating slave for \"br0\"" nmcli con add type ethernet slave-type bridge con-name br0-slave ifname ${INTERFACE_NAME} master br0
+
+  info "Configuring network..."
+  silent_execute false "Disabling STP" nmcli con modify br0 stp no
+  silent_execute false "Enabling slaves autoconnect" nmcli con modify br0 connection.autoconnect-slaves 1
+  silent_execute false "Enabling IPv4" nmcli con modify br0 ipv4.method auto
+  silent_execute false "Enabling IPv6" nmcli con modify br0 ipv6.method auto
+
+  MAC_ADDRESS=$(ip a s ${INTERFACE_NAME} | grep link/ether | awk '{print $2}')
+  silent_execute false "Cloning network card MAC address" nmcli con modify br0 bridge.mac-address ${MAC_ADDRESS}
+
+  info "Restarting network..."
+  silent_execute false "Stopping network \"br0\"" nmcli con down br0
+  silent_execute false "Starting network \"br0\"" nmcli con up br0
+fi
