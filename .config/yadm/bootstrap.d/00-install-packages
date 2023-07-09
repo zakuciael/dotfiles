@@ -58,7 +58,8 @@ declare -g -A PACKAGES=(
 	["mongodb-compass"]=true                          # Database browser for MongoDB
 	["noisetorch"]=true                               # Real-time microphone noise suppression on Linux 
 	["spotify"]=true                                  # Music player
-	["ulauncher"]=true                                # App launcher
+  ["ulauncher"]=true                                # App launcher
+  ["rofi-lbonn-wayland-git"]=true                   # App launcher
 	["visual-studio-code-bin"]=true                   # Code editor
 
 	# System apps
