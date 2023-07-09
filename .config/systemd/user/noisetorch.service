@@ -1,14 +1,11 @@
 [Unit]
 Description = Noise cancelling service for Samson GoMic microphone
-Requires=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card0-controlC0.device
-After=sys-devices-pci0000:00-0000:00:14.0-usb3-3\x2d5-3\x2d5:1.0-sound-card0-controlC0.device
 After=pipewire.service
 
 [Service]
 Type=simple
 RemainAfterExit=yes
-ExecStartPre=/bin/bash -c "/bin/systemctl --user set-environment DEVICE_ID=$$(/usr/bin/noisetorch -l | /usr/bin/grep -Po 'alsa_input\\.usb-Samson_Technologies_Samson_GoMic-([[:alnum:][:punct:]]+)analog-stereo([[:alnum:][:punct:]]+)?' | /usr/bin/head -1)"
-ExecStart=/usr/bin/noisetorch -i -s $DEVICE_ID -t 55 -log
+ExecStart=/home/zakku/.scripts/start_noisetorch
 ExecStop=/usr/bin/noisetorch -u
 Restart=on-failure
 RestartSec=3
