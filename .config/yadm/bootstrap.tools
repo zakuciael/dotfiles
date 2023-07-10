@@ -34,10 +34,12 @@ execute() {
     status "${MSG}"
   fi
 
-  if ${CMD} ; then
+  eval "${CMD} 2>/tmp/cmd.log"
+  if [ $? -eq 0 ]; then
     success "${MSG}, done"
   else
     fail "${MSG}, failed"
+    echo "$(cat /tmp/cmd.log)"
     exit 1
   fi
 }
@@ -51,11 +53,13 @@ silent_execute() {
     status "${MSG}" true
   fi
 
-  ${CMD} > /dev/null 2>&1
+  eval "${CMD} > /dev/null 2>/tmp/cmd.log"
   if [ $? -eq 0 ]; then
     success "${MSG}, done"
   else
     fail "${MSG}, failed"
+    echo "$(cat /tmp/cmd.log)"
+    exit 1
   fi
 
 }
