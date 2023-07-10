@@ -24,11 +24,23 @@ declare -g -A PACKAGES=(
 	["xdg-user-dirs"]=false                           # Tool to manage "well known" user directories
   ["waybar"]=false                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors.
   ["hyprpaper"]=false                               # Blazing fast wallpaper utility for Hyprland
+  ["networkmanager"]=false                          # Network configuration
   ["procmail"]=true                                 # Used to get "lockfile" command
 	["wev"]=true                                      # Tool for debugging wayland events, similar to xev 
 	["xwaylandvideobridge-cursor-mode-2-git"]=true    # XWayland Bridge for screen sharing 
 	["sddm-git"]=true                                 # Display manager
   ["swww"]=true                                     # Efficient animated wallpapers
+
+  # Virtual machine
+  ["virt-manager"]=false
+  ["qemu-desktop"]=false
+  ["vde2"]=false
+  ["ebtables"]=false
+  ["iptables-nft"]=false
+  ["nftables"]=false
+  ["dnsmasq"]=false
+  ["bridge-utils"]=false
+  ["ovmf"]=false
 
 	# Fonts
 	["adobe-source-code-pro-fonts"]=false             # Adobe fonts
@@ -167,9 +179,9 @@ if prompt_boolean "Would you like to install system packages?"; then
       success "Installing ${PACKAGE}, already installed"
     else
       if [[ ${PACKAGES[${PACKAGE}]} == true ]]; then
-        silent_execute true "Installing ${PACKAGE}" yay -S --noconfirm --needed --removemake --nodiffmenu --nocleanmenu --mflags \"--noconfirm\" ${PACKAGE}
+        silent_execute true "Installing ${PACKAGE}" "yay -S --noconfirm --needed --removemake --nodiffmenu --nocleanmenu --mflags \"--noconfirm\" ${PACKAGE}"
       else
-        silent_execute true "Installing ${PACKAGE}" sudo pacman -S --needed --noconfirm ${PACKAGE}
+        silent_execute true "Installing ${PACKAGE}" "yes | sudo pacman -S --needed ${PACKAGE}"
       fi
     fi
   done
