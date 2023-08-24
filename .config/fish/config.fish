@@ -25,11 +25,20 @@ alias tmux="tmux -2"
 alias cloc="tokei"
 alias locate="lolcate"
 
+# Abbreviations
+abbr --add config --position anywhere --set-cursor "~/.config/%"
+abbr --add !! --position command --function sudo_last_cmd
+abbr --add bench --position command --set-cursor "hyperfine %"
+abbr --add benchmark --position command --set-cursor "hyperfine %"
+
 # Setup thefuck aliases
 thefuck --alias | source
 
 # Load rtx (asdf rust clone)
 rtx activate fish | source
+
+# Load corepack (package manager for Node.js package managers)
+corepack enable
 
 # Load zoxide (smarter cd)
 zoxide init fish | source
