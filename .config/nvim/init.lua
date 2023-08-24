@@ -1,24 +1,21 @@
-require("core.options")
-require("core.keymaps")
--- Setup lazy.nvim and plugins
+require "core"
 
-local install_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
 
-if not vim.loop.fs_stat(install_path) then
-  print("Installing lazy.nvim")
-
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    install_path,
-  })
-
-  print("lazy.nvim installed successfully")
+if custom_init_path then
+  dofile(custom_init_path)
 end
 
-vim.opt.rtp:prepend(install_path)
+require("core.utils").load_mappings()
 
-require("lazy").setup("plugins")
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+
+-- bootstrap lazy.nvim!
+if not vim.loop.fs_stat(lazypath) then
+  require("core.bootstrap").gen_chadrc_template()
+  require("core.bootstrap").lazy(lazypath)
+end
+
+dofile(vim.g.base46_cache .. "defaults")
+vim.opt.rtp:prepend(lazypath)
+require "plugins"
