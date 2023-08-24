@@ -50,6 +50,7 @@ export SXHKD_VAR_PANEL_OFFSET=25
 export SXHKD_VAR_BORDER_OFFSET=-6
 export SXHKD_VAR_WM=bspwm
 export _JAVA_AWT_WM_NONREPARENTING=1
+export QT_QPA_PLATFORMTHEME=qt5ct
 SXHKD_SHELL=/usr/bin/sh sxhkd &
 
 # Start X compositor
@@ -73,8 +74,17 @@ if [[ ! `pidof xss-lock` ]]; then
 fi
 
 # Run autostart applications
-systemctl --user start xdg-desktop-autostart.target
-
-# Fix Java applications
-# wmname LG3D
-# export _JAVA_AWT_WM_NONREPARENTING=1
+/bin/fish -c "/usr/bin/env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow" &
+if [[ ! `pidof 1password` ]]; then
+  /usr/bin/1password --silent &
+fi
+if [[ ! `pidof Discord` ]]; then
+  /opt/discord/Discord &
+fi
+if [[ ! `pidof mailspring` ]]; then
+  /usr/bin/mailspring --background --minimized &
+fi
+if [[ ! `pidof jetbrains-toolbox` ]]; then
+  /home/zakku/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize &
+fi
+# systemctl --user start xdg-desktop-autostart.target
