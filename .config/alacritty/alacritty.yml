@@ -1,5 +1,7 @@
 import:
-  - ~/.config/alacritty/colors.yml
+  # - ~/.config/alacritty/themes/hyper-edit.yml
+  # - ~/.config/alacritty/thems/catppuccin/catppuccin-mocha.yml
+  - ~/.config/alacritty/themes/onedark.yml
 
 env:
   TERM: xterm-256color
@@ -22,9 +24,15 @@ scrolling:
 font:
   size: 10
   offset:
-    y: 1
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  builtin_box_drawing: false
   normal:
-    family: "Hack Nerd Font"
+    # family: "Hack Nerd Font"
+    family: "JetBrainsMono Nerd Font"
 
 cursor:
   unfocused_hollow: true
