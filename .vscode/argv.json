@@ -16,5 +16,6 @@
 
 	// Unique id used for correlating crash reports sent from this instance.
 	// Do not edit this value.
-	"crash-reporter-id": "5bee64fe-a5f6-41a4-8466-bfc3ad9a68f1"
+	"crash-reporter-id": "5bee64fe-a5f6-41a4-8466-bfc3ad9a68f1",
+	"password-store": "basic_text"
 }
