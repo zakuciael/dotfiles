@@ -129,6 +129,10 @@ caches/
 .wakatime-internal.cfg
 .wakatime.bdb
 .wakatime/
+.nuget/
+.quokka/
+.wine/
+.yuzu/
 .config/yadm/tags
 .config/opera/
 .config/evolution/
@@ -191,6 +195,9 @@ caches/
 .config/sqlitebrowser/
 .config/turborepo/
 .config/dconf/
-.op/
+.config/heroic/
+.config/goverlay/
 .config/op/
+.config/btop/btop.conf
+.op/
 .tsh/
