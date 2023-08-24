@@ -2,7 +2,7 @@
 source ~/.config/yadm/bootstrap.tools
 # set -x
 
-INTERFACE_NAME=enp7s0
+INTERFACE_NAME=enp8s0
 
 if prompt_boolean "Would you like to setup network configuration?"; then
   if is_installed dhcpcd; then
