@@ -245,6 +245,10 @@ case "$1" in
       # Enable audio passthrough
       log info "Connecting PS4 audio to the PC audio..."
 
+      log debug "Changing line boost to 0"
+      amixer -c 0 sset "Line Boost" 0
+      sleep 0.1
+
       for i in $(seq ${#PS4_AUDIO_PORTS[@]}); do
         PS4_AUDIO_PORT=${PS4_AUDIO_PORTS[$i - 1]}
         PC_AUDIO_PORT=${PC_AUDIO_PORTS[$i - 1]}
