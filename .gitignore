@@ -68,6 +68,7 @@ $RECYCLE.BIN/
 *.txz
 .z
 .idea
+.wget-hsts
 .vscode/extensions/*
 !.vscode/extensions/extensions.json
 .config/imhex/recent/
@@ -133,6 +134,7 @@ caches/
 .quokka/
 .wine/
 .yuzu/
+.dotnet/
 .config/yadm/tags
 .config/opera/
 .config/evolution/
@@ -199,5 +201,6 @@ caches/
 .config/goverlay/
 .config/op/
 .config/btop/btop.conf
+.config/cava/
 .op/
 .tsh/
