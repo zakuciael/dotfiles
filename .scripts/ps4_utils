@@ -246,7 +246,9 @@ case "$1" in
       log info "Connecting PS4 audio to the PC audio..."
 
       log debug "Changing line boost to 0"
-      amixer -c 0 sset "Line Boost" 0
+      AUDIO_CARD=$(alsactl info PCH | grep -Po "(?<=- card: )\d+")
+
+      amixer -c $AUDIO_CARD sset "Line Boost" 0
       sleep 0.1
 
       for i in $(seq ${#PS4_AUDIO_PORTS[@]}); do
