@@ -5,27 +5,34 @@ init $@
 
 WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
 
-output() {
-  local ARGS=$@
-  echo "desktop='^1' $ARGS"
-}
-
 floating() {
   local ARGS=$@
-  output "state=floating center=on $ARGS"
+  echo "state=floating center=on $ARGS"
+}
+
+desktop() {
+  local ARGS=$@
+  echo "desktop=^1 $ARGS"
+}
+
+output() {
+  local ARGS=$@
+  echo "desktop=^1 state=floating center=on $ARGS"
 }
 
 if [[ "$CLASS_NAME" == jetbrains-* ]] || [[ "$CLASS_NAME" == "kotlinx-coroutines-scheduling-CoroutineScheduler\$Worker" ]]; then
   if [[ "$WINDOW_NAME" = "splash" ]]; then
-    floating "border=off"
+    desktop $(floating) "border=off"
   elif [[ "$WINDOW_NAME" == "Welcome to "* ]]; then
-    floating
+    desktop $(floating)
   elif [[ "$WINDOW_NAME" == "Import "* ]] && [[ "$WINDOW_NAME" == *"Settings" ]]; then
-    floating
+    desktop $(floating)
   elif [[ "$WINDOW_NAME" == *" and Plugin Updates" ]]; then
-    floating
+    desktop $(floating)
   elif [[ "$WINDOW_NAME" == *"User Agreement" ]]; then
-    floating
+    desktop $(floating)
+  else
+    desktop
   fi
 else
  skip
