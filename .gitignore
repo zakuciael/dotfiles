@@ -202,5 +202,6 @@ caches/
 .config/op/
 .config/btop/btop.conf
 .config/cava/
+.config/imhex/
 .op/
 .tsh/
