@@ -17,7 +17,7 @@ set -gx PNPM_HOME "$HOME/.local/share/pnpm"
 fish_add_path "$PNPM_HOME"
 
 # Aliases
-alias ls="exa -lag --header --icons --git"
+alias ls="eza -lag --header --icons --git"
 alias cat="bat"
 alias df="duf"
 alias vim="nvim"
