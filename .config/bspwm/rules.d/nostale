@@ -1,0 +1,12 @@
+#!/bin/sh
+
+source "/home/zakku/.config/bspwm/rules.tools"
+init $@
+
+WINDOW_NAME=$(window_prop $WINDOW_ID "WM_NAME")
+
+if [[ "$WINDOW_NAME" == "nosSplashForm_F" ]]; then
+  echo "desktop=^1 state=floating center=on follow=on focus=on border=off"
+elif [[ "$WINDOW_NAME" == "Nostale" ]] || [[ "$WINDOW_NAME" == "NosTale" ]]; then
+  echo "desktop=^1 state=floating center=on follow=on focus=on border=off"
+fi
