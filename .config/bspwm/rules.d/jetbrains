@@ -10,29 +10,24 @@ floating() {
   echo "state=floating center=on $ARGS"
 }
 
-desktop() {
+default() {
   local ARGS=$@
-  echo "desktop=^1 $ARGS"
-}
-
-output() {
-  local ARGS=$@
-  echo "desktop=^1 state=floating center=on $ARGS"
+  echo "desktop=^1 follow=on focus=on $ARGS"
 }
 
 if [[ "$CLASS_NAME" == jetbrains-* ]] || [[ "$CLASS_NAME" == "kotlinx-coroutines-scheduling-CoroutineScheduler\$Worker" ]]; then
   if [[ "$WINDOW_NAME" = "splash" ]]; then
-    desktop $(floating) "border=off"
+    default $(floating) "border=off"
   elif [[ "$WINDOW_NAME" == "Welcome to "* ]]; then
-    desktop $(floating)
+    default $(floating)
   elif [[ "$WINDOW_NAME" == "Import "* ]] && [[ "$WINDOW_NAME" == *"Settings" ]]; then
-    desktop $(floating)
+    default $(floating)
   elif [[ "$WINDOW_NAME" == *" and Plugin Updates" ]]; then
-    desktop $(floating)
+    default $(floating)
   elif [[ "$WINDOW_NAME" == *"User Agreement" ]]; then
-    desktop $(floating)
+    default $(floating)
   else
-    desktop
+    default
   fi
 else
  skip
