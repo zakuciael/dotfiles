@@ -60,6 +60,33 @@ ctrl + shift + q
   ~/.config/rofi/scripts/powermenu.sh
 
 #
+# Screenshot
+#
+
+# Screenshot whole screen and save to clipboard
+Print
+  ~/.scripts/screenshot.sh screen
+
+# Screenshot whole screen and save to file
+super + Print
+  ~/.scripts/screenshot.sh -f screen
+
+# Screenshot active window and save to clipboard
+alt + Print
+  ~/.scripts/screenshot.sh window
+
+# Screenshot active window and save to file
+super + alt + Print
+  ~/.scripts/screenshot.sh -f window
+
+# Screenshot selected region and save to clipboard
+ctrl + Print
+  ~/.scripts/screenshot.sh region
+
+# Screenshot selected region and save to file
+super + ctrl + Print, exec, ~/.scripts/screenshot.sh -f region
+
+#
 # Scratchpad
 # 
 
