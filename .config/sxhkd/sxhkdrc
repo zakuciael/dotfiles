@@ -6,6 +6,7 @@
 super + Return
 	alacritty
 
+# Open file browser
 super + e
   dolphin --new-window
 
@@ -29,13 +30,10 @@ super + F1
 {_,super + }XF86AudioMute
   ~/.scripts/player {_,-s} mute
 
-# Make a screenshot
-Print
-    flameshot gui
-
 # Lock session
 super + l
-  loginctl lock-session
+  betterlockscreen -l
+  # loginctl lock-session
 
 # Toggle PS4 audio passthrough on and off
 super + KP_Multiply
