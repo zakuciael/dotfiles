@@ -81,7 +81,9 @@ if [[ ! `pidof xss-lock` ]]; then
 fi
 
 # Run autostart applications
-/bin/fish -c "/usr/bin/env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow" &
+# if [[ ! `pidof -x ulauncher` ]]; then
+#   /bin/fish -c "/usr/bin/env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow" &
+# fi
 if [[ ! `pidof 1password` ]]; then
   /usr/bin/1password --silent &
 fi
