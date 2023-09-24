@@ -84,7 +84,8 @@ ctrl + Print
   ~/.scripts/screenshot.sh region
 
 # Screenshot selected region and save to file
-super + ctrl + Print, exec, ~/.scripts/screenshot.sh -f region
+super + ctrl + Print
+  ~/.scripts/screenshot.sh -f region
 
 #
 # Scratchpad
