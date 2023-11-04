@@ -25,6 +25,7 @@ declare -g -A PACKAGES=(
   ["waybar"]=false                                  # Highly customizable Wayland bar for Sway and Wlroots based compositors.
   ["hyprpaper"]=false                               # Blazing fast wallpaper utility for Hyprland
   ["networkmanager"]=false                          # Network configuration
+  ["plymouth"]=false                                # Flicker-free graphical boot splash screen
   ["procmail"]=true                                 # Used to get "lockfile" command
 	["wev"]=true                                      # Tool for debugging wayland events, similar to xev 
 	["xwaylandvideobridge-cursor-mode-2-git"]=true    # XWayland Bridge for screen sharing 
