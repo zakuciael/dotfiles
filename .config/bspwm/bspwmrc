@@ -25,11 +25,11 @@ bspc config external_rules_command "/home/zakku/.config/bspwm/rules"
 # BSPWM window rules
 bspc rule -a Ulauncher state=floating border=off focus=on
 bspc rule -a sxhkd_keys state=floating
-bspc rule -a discord desktop='^7'
+bspc rule -a discord desktop='^4' focus=off follow=off
 bspc rule -a thunderbird state=floating
 bspc rule -a calendar_dropdown state=floating border=off
 bspc rule -a Shadow desktop='^1' state=floating
-bspc rule -a steam desktop='^1'
+# bspc rule -a steam desktop='^1'
 
 # Change yadm class to "bspwm"
 yadm config local.class bspwm
