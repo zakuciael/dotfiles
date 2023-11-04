@@ -9,12 +9,13 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,run,filebrowser,window";
+	modi:                       "drun,jetbrains,ssh,filebrowser,window";
   show-icons:                 true;
   display-drun:               "";
-  display-run:                "";
+  display-ssh:                "";
   display-filebrowser:        "";
   display-window:             "";
+  display-jetbrains:          "";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";
 }
@@ -236,7 +237,7 @@ element alternate.active {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        24px;
+    size:                        28px;
     cursor:                      inherit;
 }
 element-text {

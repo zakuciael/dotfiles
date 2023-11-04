@@ -43,6 +43,14 @@ super + KP_Multiply
 super + KP_Divide
   ~/.scripts/ps4_utils display
 
+# Open rofi in ssh mode
+ctrl + shift + t
+  ~/.config/rofi/launchers/launcher.sh ssh
+
+# Open rofi in jetbrains mode
+ctrl + shift + r
+  ~/.config/rofi/launchers/launcher.sh jetbrains
+
 # Open rofi in drun mode
 ctrl + shift + space
   ~/.config/rofi/launchers/launcher.sh drun
