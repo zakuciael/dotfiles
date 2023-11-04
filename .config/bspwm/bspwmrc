@@ -64,7 +64,7 @@ picom -b &
 # Run wallpaper engine for linux
 if [[ ! `pidof linux-wallpaperengine` ]]; then
   linux-wallpaperengine --silent \
-    --assets-dir /mnt/games/Steam/steamapps/common/wallpaper_engine/assets/ \
+    --assets-dir /media/games/Steam/steamapps/common/wallpaper_engine/assets/ \
     --screen-root DisplayPort-0 --bg ~/Pictures/Wallpapers/Animated/WallpaperEngine/3018048025 \
     --screen-root HDMI-A-0 --bg ~/Pictures/Wallpapers/Animated/WallpaperEngine/3029439711 \
     --screen-root DVI-D-0 --bg ~/Pictures/Wallpapers/Animated/WallpaperEngine/3009326793 &
