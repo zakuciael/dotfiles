@@ -69,8 +69,8 @@ if [[ ! `pidof linux-wallpaperengine` ]]; then
   linux-wallpaperengine --silent \
     --assets-dir $WP_ASSETS \
     --screen-root DisplayPort-0 --bg $WP_WALLPAPERS_ROOT/3018048025 \
-    --screen-root HDMI-A-0 --bg $WP_WALLPAPERS_ROOT/3029439711 \
-    --screen-root DVI-D-0 --bg $WP_WALLPAPERS_ROOT/3009326793 &
+    --screen-root DisplayPort-1 --bg $WP_WALLPAPERS_ROOT/3029439711 \
+    --screen-root HDMI-A-0 --bg $WP_WALLPAPERS_ROOT/3009326793 &
 fi
 
 # Discord RPC Extension
