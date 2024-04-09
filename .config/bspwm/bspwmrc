@@ -2,14 +2,14 @@
 
 # BSPWM monitor layout
 if xrandr --listactivemonitors | grep -q "DisplayPort-0"; then
-  bspc wm -O DisplayPort-0 HDMI-A-0 DVI-D-0
+  bspc wm -O DisplayPort-0 DisplayPort-1 HDMI-A-0
   bspc monitor DisplayPort-0 -d 1 2 3
-  bspc monitor HDMI-A-0 -d 4 5 6
-  bspc monitor DVI-D-0 -d 7 8 9
+  bspc monitor DisplayPort-1 -d 4 5 6
+  bspc monitor HDMI-A-0 -d 7 8 9
 else
-  bspc wm -O HDMI-A-0 DVI-D-0 DisplayPort-0
-  bspc monitor HDMI-A-0 -d 1 2 3 4 5 6
-  bspc monitor DVI-D-0 -d 7 8 9
+  bspc wm -O DisplayPort-1 HDMI-A-0 DisplayPort-0
+  bspc monitor DisplayPort-1 -d 1 2 3 4 5 6
+  bspc monitor HDMI-A-0 -d 7 8 9
 fi
 
 # BSPWM config
@@ -29,6 +29,7 @@ bspc rule -a discord desktop='^4' focus=off follow=off
 bspc rule -a thunderbird state=floating
 bspc rule -a calendar_dropdown state=floating border=off
 bspc rule -a Shadow desktop='^1' state=floating
+bspc rule -a "An Anime Game Launcher" state=floating border=off
 # bspc rule -a steam desktop='^1'
 
 # Change yadm class to "bspwm"
@@ -63,11 +64,13 @@ picom -b &
 
 # Run wallpaper engine for linux
 if [[ ! `pidof linux-wallpaperengine` ]]; then
+  export WP_ASSETS=/media/games/linux/Steam/steamapps/common/wallpaper_engine/assets
+  export WP_WALLPAPERS_ROOT=~/Pictures/Wallpapers/Animated/WallpaperEngine
   linux-wallpaperengine --silent \
-    --assets-dir /media/games/Steam/steamapps/common/wallpaper_engine/assets/ \
-    --screen-root DisplayPort-0 --bg ~/Pictures/Wallpapers/Animated/WallpaperEngine/3018048025 \
-    --screen-root HDMI-A-0 --bg ~/Pictures/Wallpapers/Animated/WallpaperEngine/3029439711 \
-    --screen-root DVI-D-0 --bg ~/Pictures/Wallpapers/Animated/WallpaperEngine/3009326793 &
+    --assets-dir $WP_ASSETS \
+    --screen-root DisplayPort-0 --bg $WP_WALLPAPERS_ROOT/3018048025 \
+    --screen-root HDMI-A-0 --bg $WP_WALLPAPERS_ROOT/3029439711 \
+    --screen-root DVI-D-0 --bg $WP_WALLPAPERS_ROOT/3009326793 &
 fi
 
 # Discord RPC Extension
@@ -91,7 +94,7 @@ if [[ ! `pidof Discord` ]]; then
   /opt/discord/Discord &
 fi
 if [[ ! `pidof mailspring` ]]; then
-  /usr/bin/mailspring --background --minimized &
+  /usr/bin/mailspring --background --minimized --password-store="gnome-libsecret" &
 fi
 if [[ ! `pidof jetbrains-toolbox` ]]; then
   /home/zakku/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize &
